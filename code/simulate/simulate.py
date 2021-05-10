@@ -53,7 +53,7 @@ def simulate_stream(df, colname="_value", cumulative=True, batch_size=10, model=
             # TODO: write code for algorithm
             pass
         else:
-            temp_results = df.loc[start:end, "_value"].mean()
+            temp_results = df.loc[start:end, colname].mean()
 
         # Memory and time taking
         t = time.perf_counter() - start_t
