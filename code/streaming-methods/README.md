@@ -1,6 +1,8 @@
 # Streaming Methods
 
-This folders contains various test files (non project code) for running a Python program with InfluxDB. The files/methods currently include:
+This folders contains various test files (non project code) for running a Python program with InfluxDB. The current plan is to move forward with an implementation with `RxPy` that queries data from InfluxDB on a rapid schedule, run anomaly detection, and writes back to InfluxDB. This implementation can likely be modified in the future but should provide an initial framework for implementing the near real-time anomaly detection system.
+
+The files/methods currently include:
 
 ## Python programs using RxPy
 
@@ -51,3 +53,7 @@ This method seems like a higher effort route than using `RxPy`. We've had troubl
 ## Using Telegraf to run a Python Program on Input Data
 
 Similar to the discussion above, we are not sure about the level of effort required to get a Python program to successfully run from Telegraf. Going this route could result in a high-effort unsuccessful method (however, it should be noted that this may ultimately be the fastest method).
+
+## Others
+
+There may be other methods (using PySpark etc) that could work. However, given the timeline unless an obvious method is identified, additional methods are not being pursued.
