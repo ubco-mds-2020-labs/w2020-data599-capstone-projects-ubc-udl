@@ -1,5 +1,11 @@
 # Weekly Updates
 
-The team will document (summarize) their overall project progress on a weekly basis, linking it to key project deliverables. 
+Weekly updates are provided in the PowerPoint documents. The documents include:
 
-Place your weekly status updates in this folder before your weekly meeting.
+- Description of previous week progress including:
+    - Tasks completed
+    - Overview of individual contributions
+    - Outstanding tasks and challenges
+- Description of next week goals/tasks
+- Discussion on project timeline
+- Various project details for discussion during the weekly meeting
