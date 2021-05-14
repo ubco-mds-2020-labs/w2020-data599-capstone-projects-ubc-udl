@@ -21,12 +21,14 @@ All team-members contributed to the above tasks.
 
 Goals for the second project week included:
 
-- Select Project Data and Complete EDA
+- Select Project Data and Complete EDA (still in progress at the end of Week 2)
 - Understand Data Systems
 - Learn InfluxDB and Telegraf
 - Simulate Streaming in InfluxDB
 - Anomaly Detection Research
 
+Additionally, a Telegraf parser was worked on allowing streaming data directly into InfluxDB.
+
 | Nate | Mitch | Ryan | All |
 | --- | --- | --- | --- |
-| Learn InfluxDB and Telegraf, Simulate Streaming in InfluxDB, Project Management | Anomaly Detection Research | Learn InfluxDB and Telegraf, EDA, Streaming Data Parser | Get a Local Setup of InfluxDB and Telegraf Working in Docker |
+| Learn InfluxDB and Telegraf, Simulate Streaming in InfluxDB, Investigate Streaming Detection Frameworks, Project Management | Anomaly Detection Research | Learn InfluxDB and Telegraf, EDA, XML Parser | Get a Local Setup of InfluxDB and Telegraf Working in Docker, Work on Streaming Data Parser |
