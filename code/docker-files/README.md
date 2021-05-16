@@ -16,4 +16,4 @@ A description of the various test environments are provided below:
     - same setup as `one-telegraf` but runs the streaming data through the execd processor with a python script
     - includes a new docker container `natewray/telegraf-python:1.18.2` which installs python allowing python scripts to be run from the Telegraf execd plug-in
 
-`telegraf-python.docker` is not required to run the above setups but provides the file used to create the derivative `natewray/telegraf-python:1.18.2` container which is a copy of the `telegraf:1.18.2` container but with python installed. This container is hosted on docker hub [here](https://hub.docker.com/repository/docker/natewray/telegraf-python).
+`telegraf-python.docker` is not required to run the above setups but provides the file used to create the derivative `natewray/telegraf-python:1.18.2` container which is a copy of the `telegraf:1.18.2` container but with python installed. This container is hosted directly on docker hub [here](https://hub.docker.com/repository/docker/natewray/telegraf-python) but can also be built using the command `docker build -t natewray/telegraf-python:1.18.2 - < telegraf-python.docker`.
