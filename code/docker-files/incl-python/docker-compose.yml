@@ -11,10 +11,10 @@ services:
     environment: 
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=MDS2021
-      - DOCKER_INFLUXDB_INIT_PASSWORD=***REMOVED***
+      - DOCKER_INFLUXDB_INIT_PASSWORD=mypassword
       - DOCKER_INFLUXDB_INIT_ORG=UBC
       - DOCKER_INFLUXDB_INIT_BUCKET=MDS2021
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=***REMOVED***
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mytoken
 
   telegraf:
     image: natewray/telegraf-python:1.18.2
