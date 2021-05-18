@@ -17,7 +17,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mytoken
 
   telegraf:
-    image: telegraf:1.18.2
+    image: natewray/telegraf-python:1.18.2
     links:
       - influxdb
     volumes:
