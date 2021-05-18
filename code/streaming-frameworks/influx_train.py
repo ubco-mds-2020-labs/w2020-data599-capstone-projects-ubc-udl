@@ -134,6 +134,9 @@ class influx_class:
 
 
 if __name__ == "__main__":
+    import os
+
+    SKYSPARK_Token = os.getenv("SKYSPARK_Token")
 
     # query test
     # this queries from the UDL InfluxDB
@@ -141,7 +144,7 @@ if __name__ == "__main__":
         org="UBC",
         url="http://206.12.92.81:8086/",
         bucket="SKYSPARK",
-        token="addtokenhere",
+        token=SKYSPARK_Token,
     )
 
     output = test_query.make_query(location="Campus Energy Centre", window=60)
