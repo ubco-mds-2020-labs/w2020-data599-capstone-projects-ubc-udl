@@ -44,7 +44,7 @@ def predict_anomaly(data_dict):
     prediction -- true if anomalous and false if not, boolean
     """
 
-    return data_dict["measurement"] < 10
+    return float(data_dict["measurement"]) < 10
 
 
 def convert_data(data_dict, predict_result):
@@ -67,8 +67,15 @@ def convert_data(data_dict, predict_result):
     id_out = "id=" + data_dict["id"]
     val_out = "measurement=" + data_dict["measurement"]
 
-    output = "CHECK_ANOMALY," + " ".join(
-        [id_out, val_out, anomaly_output, data_dict["timestamp"]]
+    output = (
+        "CHECK_ANOMALY,"
+        + id_out
+        + " "
+        + val_out
+        + ","
+        + anomaly_output
+        + " "
+        + data_dict["timestamp"]
     )
 
     return output
