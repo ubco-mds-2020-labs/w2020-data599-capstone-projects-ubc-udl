@@ -1,6 +1,8 @@
+"""query/write from InfluxDB function"""
+
 import datetime
-import influxdb_client
-import pandas
+from influxdb_client import InfluxDBClient
+from influxdb_client.client.write_api import SYNCHRONOUS
 
 # import pytz
 
@@ -27,7 +29,7 @@ class influx_class:
         self.url = url
         self.bucket = bucket
         self.token = token
-        self.client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
+        self.client = InfluxDBClient(url=url, token=token, org=org)
 
     def make_query(
         self,
@@ -107,8 +109,7 @@ class influx_class:
 
         return result
 
-    # TODO: need to check/add write options
-    # sometimes issue during testing that writing is not successful
+    # TODO: potentially modify write options
     def write_data(self, df):
         """
         Write to InfluxDB
@@ -124,13 +125,18 @@ class influx_class:
         # TODO: replace with better code for naming _value field
         df_write.rename(columns={"_value": "val_num"}, inplace=True)
 
-        self.client.write_api().write(
+        self.client.write_api(write_options=SYNCHRONOUS).write(
             self.bucket,
             self.org,
             record=df_write,
             data_frame_measurement_name="CHECK_ANOMALY",
             data_frame_tag_columns=["uniqueID"],
         )
+
+
+# def predict_anomaly_df(df_in):
+#    """
+#    Makes predictions from queries to InfluxDB based on a trained
 
 
 if __name__ == "__main__":
@@ -168,4 +174,4 @@ if __name__ == "__main__":
     )
 
     test_write.write_data(output_new)
-    # test_write.client.close()
+    test_write.client.close()
