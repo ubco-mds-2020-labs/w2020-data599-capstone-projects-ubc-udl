@@ -34,7 +34,10 @@ def extract_data(line):
     return output_dict
 
 
-def predict_anomaly(data_dict):
+# Note: it may make more sense to roll this into a single predict function
+# for the project
+# predict_anomaly_df() currently currently also exists in train_predict.py
+def predict_anomaly_line(data_dict):
     """
     Uses output from `extract_data()` to predict if result is anomalous or not.
 

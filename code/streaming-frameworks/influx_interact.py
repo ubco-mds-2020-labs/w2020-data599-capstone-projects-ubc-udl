@@ -1,7 +1,8 @@
+"""query/write from InfluxDB function"""
+
 import datetime
 from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import SYNCHRONOUS
-import pandas
 
 # import pytz
 
@@ -131,6 +132,11 @@ class influx_class:
             data_frame_measurement_name="CHECK_ANOMALY",
             data_frame_tag_columns=["uniqueID"],
         )
+
+
+# def predict_anomaly_df(df_in):
+#    """
+#    Makes predictions from queries to InfluxDB based on a trained
 
 
 if __name__ == "__main__":
