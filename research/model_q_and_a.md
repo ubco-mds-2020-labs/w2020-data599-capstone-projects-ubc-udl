@@ -10,11 +10,11 @@
 
 ## Answers
 
-1. Depends how close to the edge we are. The closer to the edge the lighter the models have to be in terms of space and computational complexity. Reguarding boiler sensors, anomaly detection will be done (in the fog ((is this a common enough term to use like this?))) allowing us to use heavier models. Exploring using one gerneral model like a rnn-lstm or a sr-cnn, vs a small amount of simple models, one for each of the anomaly times were are trying to detect.
+1. Depends how close to the edge we are. The closer to the edge the lighter the models have to be in terms of space and computational complexity. Reguarding boiler sensors, anomaly detection will be done one or more steps back from the edge allowing us to use heavier models. Exploring using one gerneral model like a rnn-lstm or a sr-cnn, vs a small amount of simple models, one for each of the anomaly times were are trying to detect.
 
 2. From the EDA we can see different anomaly types. Some sensors produce data with constant mean and variance and other sensors produce data with seasonal trends. The types of anamalies we are looking for are: point anomalies, contextual anomalies, collective anomalies, and missing data.
 
-3. We are going to train the model every day at 4 am (time and frequency to be decided on) with the data produced during the day, and the relevent pipelines will be passed their models for inline prediction.
+3. We are going to train the model at scheduled intervals in an offline fashion, and the relevent pipelines will be passed their models for inline prediction.
 
 4. Refer to `comperison_of_packages.xlsx` and `research/notebook-demo/package_demo.ipynb`
 
