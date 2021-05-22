@@ -15,7 +15,7 @@ The input csv file needs to have the following columns (in this order):
 
 The file `test.csv` was used to test input data to the app. Note that the column names are not required, they just need to be in this order.
 
-The output format is the same as the input format but will have the columns labelled using the names in the above list.
+The output format is the same as the input format but will have the columns labelled using the names in the above list. **Note:** The timezone of the output data will be UTC (converted from whatever input timezone was used).
 
 ## Loading the App
 
