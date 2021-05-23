@@ -25,6 +25,7 @@ shinyServer(function(input, output) {
         colnames(temp) <- c('Datetime', 'Value', 'ID', 'Anomaly')
         temp$Datetime <- lubridate::as_datetime(temp$Datetime)
         temp$Value <- as.numeric(temp$Value)
+        temp$Anomaly <- as.logical(temp$Anomaly)
         data1(temp)
     })
     
