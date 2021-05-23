@@ -1,6 +1,14 @@
-# Unlabelled Data
-This folder consists of unlabelled data from the EWS Skyspark Database.  
-It was downloaded in CSV format 10,000 data points at a time and then merged into single csv files for each sensors. Units were removed off of the values in order to imitate the data format that would be pulled off of InfluxDB.
+# Unlabelled SkySpark Data
+
+This folder consists of data manually downloaded from the EWS SkySpark Database. This was done to support model development as there is currently not an easy way to access data.
+
+The data were downloaded in CSV format 10,000 data points at a time and then merged into single csv files for each sensor. The data was modified as follows:
+
+- units were removed from the values (for example data was in the format 32MW, this was changed to be 32)
+- an `ID` column was added with the name of the sensor
+- an `Anomaly` column was added (True/False) and was populated with `False`
+
+Note that the sensors have different recording intervals.
 
 | **Sensor Name**                                               | **File Name**           | **Date Range**      |
 | :------------------------------------------------------------ | :---------------------- | :------------------ |
