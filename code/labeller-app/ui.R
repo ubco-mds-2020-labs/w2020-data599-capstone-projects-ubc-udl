@@ -5,6 +5,8 @@ library(plotly)
 library(shinycssloaders) # withSpinner() calculation/rendering in progress
 library(shinythemes)
 
+options(shiny.maxRequestSize = 75*1024^2) # increase allowable filesize
+
 # a more elegant solution than multiple br()
 linebreaks <- function(n){HTML(strrep(br(), n))}
 
