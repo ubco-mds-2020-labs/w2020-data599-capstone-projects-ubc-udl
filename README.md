@@ -15,7 +15,7 @@ This README will be built-out during the project (note that the file structure l
 - [final-report](final-report) - currently unpopulated
 - [meeting-minutes](meeting-minutes/) - client meeting minutes and sprint planning documents
 - [misc-docs](misc-docs/) - miscellaneous documents such as `team-contract.md` and `code-standards.md`
-- [personal-logs](personal-logs/) - each team-members daily timelogs as well as a `README` with a brief summary of each week
+- [personal-logs](personal-logs/) - each team-members daily time logs, summary of weekly time spent in `weekly-summary.xlsx` as well as a `README` with a brief summary of each week
 - [proposal](proposal/) - project proposal report and presentation
 - [research](research/) - various documents and code associated with researching/exploring various aspects of the project including:
     - [EDA](research/EDA/) - exploratory data analysis completed at the start of the project to understand various CEC sensors
