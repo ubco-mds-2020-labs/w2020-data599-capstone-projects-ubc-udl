@@ -47,11 +47,11 @@ Helping implement the Telegraf parser to support getting streaming data into Inf
 
 | Nate | Mitch | Ryan | All |
 | --- | --- | --- | --- |
-| Build Streaming Framework and Test Locally, Project Management | Ongoing Anomaly Detection Research | Ongoing EDA, Help with Anomaly Detection Research, Support Telegraf Parsing | Meet with Domain Experts |
+| Build Streaming Framework and Test Locally, Project Management, Build Anomaly Labeller App, Manually Label Anomalies | Ongoing Anomaly Detection Research, Start Building LSTM | Ongoing EDA, Help with Anomaly Detection Research, Support Telegraf Parsing, Manually Label Anomalies | Meet with Domain Experts |
 
 **Notes:** 
 
 - Felt that additional time was required on anomaly detection research before building the model. Accordingly, building the model was moved to Week 4.
 - Also, with the ongoing EDA this week data cleaning will was largely moved to Week 4.
-- An additional item not included in the schedule was research of good anomaly detection performance measures, this week be completed early next week.
-- We will need to self-label anomalies in the dataset.
+- An additional item not included in the schedule was research of good anomaly detection performance measures, this will be completed early next week.
+- Also needed to manually download data and self-label what we consider to be anomalies in the datasets. Five sensors were downloaded and labelled (2 of which required comments from EWS).
