@@ -5,6 +5,7 @@ This folder contains the datasets from the `unlabelled-skspark-data` folder but 
 - the updated csv files with the `Anomaly` column updated. Manual labelling done using the Shiny app in `/code/labeller-app/`
 - a summary spreadsheet listing the labelled anomaly events with any questions/comments
 - an image folder corresponding to each sensor with snapshots from the app (the summary spreadsheet provides information on the images)
+- note that the datatime column in the files are in UTC
 
 | **Sensor Name**                                               | **File Name**           | **Image Folder**      |
 | :------------------------------------------------------------ | :---------------------- | :------------------ |
