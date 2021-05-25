@@ -29,7 +29,7 @@ def serve_prediction():
     hit url with data and model_id parameters
     eg:
 
-    http://127.0.0.1:5000/?model_id=group_a&data=string_of_data_points
+    http://127.0.0.1:5000/?model_id=sensor2&data=string_of_data_points
     """
 
     # takes data as string for now
@@ -44,7 +44,7 @@ def serve_prediction():
     data = np.array(data).reshape((1, len(data), 1))
 
     # make predictions
-    model = keras.models.load_model("../../../models/sensor2_model")
+    model = keras.models.load_model(f"../../../models/{model_id}")
     x_test_pred = model.predict(data, verbose=0)
 
     # format predictions
