@@ -12,14 +12,6 @@ from flask import Flask, request
 app = Flask(__name__)
 
 THRESHOLD = 1.5
-TIME_STEPS = 15
-
-
-def p2f(value):
-    """
-    data formatting for sensor2
-    """
-    return float(value.strip("ppm"))
 
 
 # serve predictions from root, pass item string in qs
