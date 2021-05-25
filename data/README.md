@@ -8,8 +8,9 @@ This folder consists of the data manually downloaded from the EWS SkySpark inter
 
 ## labelled-skyspark-data
 
-This folder contains the datasets from the `unlabelled-skspark-data` folder but has data manually labelled as anomalous. The folder contains:
+This folder contains the datasets from the `unlabelled-skspark-data` folder but has data manually labelled as anomalous for input to modelling. The folder contains:
 
+- a summary spreadsheet with a table noting various permutations on sensor labelling  
 - the updated csv files with the `Anomaly` column updated. Manual labelling done using the Shiny app in `/code/labeller-app/`
 - a summary spreadsheet listing the labelled anomaly events with any questions/comments
 - an image folder corresponding to each sensor with snapshots from the app (the summary spreadsheet provides information on the images)

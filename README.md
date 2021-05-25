@@ -10,8 +10,8 @@ This README will be built-out during the project (note that the file structure l
     - [simulate](code/simulate/) is a small package that can be used to facilitate offline streaming tests without using InfluxDB/Telegraf (incomplete and will be built-out as required)
     - [streaming-frameworks](code/streaming-frameworks/) is the package that will be used to for reading/writing data from InfluxDB (in-progress)
 - [data](data/) - data used in model development
-    - [unlabelled-skyspark-data] - sensor data manually downloaded from SkySpark
-    - [labelled-skyspark-data] - data manually labelled as anomalous or normal
+    - [unlabelled-skyspark-data](data/unlabelled-skyspark-data) - sensor data manually downloaded from SkySpark
+    - [labelled-skyspark-data](data/labelled-skyspark-data) - data manually labelled as anomalous or normal
 - [final-report](final-report) - currently unpopulated
 - [meeting-minutes](meeting-minutes/) - client meeting minutes and sprint planning documents
 - [misc-docs](misc-docs/) - miscellaneous documents such as `team-contract.md` and `code-standards.md`
