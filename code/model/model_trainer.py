@@ -97,6 +97,8 @@ def fit_models(data_dict, model_save_loc):
         model, _ = fit_model(x_train, y_train)
         model.save(model_save_loc + key, save_format="h5")
 
+        # TODO predict on train data and return predictions
+
 
 if __name__ == "__main__":
 
