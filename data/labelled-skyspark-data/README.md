@@ -1,6 +1,6 @@
 # Labelled SkySpark Data
 
-This folder contains the datasets from the `unlabelled-skspark-data` folder but has data manually labelled as anomalous. The folder contains:
+This folder contains the datasets from the `unlabelled-skyspark-data` folder but has data manually labelled as anomalous. The folder contains:
 
 - `dataset_summaries.xlsx` includes a table noting various permutations on sensor labelling  
 - updated csv files with the `Anomaly` column updated. Manual labelling done using the Shiny app in `/code/labeller-app/`
