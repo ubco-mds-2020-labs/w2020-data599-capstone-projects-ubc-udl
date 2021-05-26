@@ -1,7 +1,6 @@
 """
 Preps the data from sensor2 to be trained or predicted
 """
-
 from tensorflow import keras
 
 import pandas as pd
@@ -18,61 +17,77 @@ THRESHOLD = 1.5
 @app.route("/", methods=["POST"])
 def serve_prediction():
     """
-    hit url with data and model_id parameters
-    eg:
+    request to flask server to make predictions on passed data
 
-    http://127.0.0.1:5000/?model_id=sensor2&data=string_of_data_points
+    call like:
+
+    ```
+    data = {
+        "model_id": sensor1,
+        "x_data": x1_test.tolist(),
+        "time_stamps": time_stamps_to_pass,
+    }
+
+    response = requests.post(FLASK_URL, json=data)
+    ```
+    model_id: string, group model id
+
+    x_data: list, to be cast to a np array of shape (num_rows, time_steps, 1)
+
+    time_stamps: list, timestamps of prediction points, find this out before passing
+
+    FLASK_URL: string, path to the flask local host server
+        eg: `FLASK_URL = "http://127.0.0.1:5000/"`
+
+    returns: dict
+    ```
+        return {
+        "version": "0.0.1",
+        "data": return_data,
+        "model_id": model_id,
+    }
+    ```
+
+    where return_data is a dataframe that has been decomposed into a dict
+    ```
+    return_data = {
+        "Timestamp": test_score_df["Timestamp"].values.tolist(),
+        "loss": test_score_df["loss"].values.tolist(),
+        "threshold": test_score_df["threshold"].values.tolist(),
+        "anomaly": test_score_df["anomaly"].values.tolist(),
+    }
+    ```
+    where the anomaly column becomes the AR
+
     """
 
+    # unpack request data
     data = request.json
-    params = data["params"]
+    model_id = data["model_id"]
     x_data = np.array(data["x_data"])
     time_stamps = np.array(data["time_stamps"])
-    print("these are the params", params)
-    print(params, x_data.shape)
-
-    # takes data as string for now
-    # will need to change to accept timestamps (probably?) also
-    # look into passing json payload
-    # data = request.args.get("data")
-    model_id = data["params"]["model_id"]
-
-    # cast and convert to correct dims
-    # data = data.split(",")
-    # data = [float(x) for x in data]
-    # data = np.array(data).reshape((1, len(data), 1))
 
     # make predictions
     model = keras.models.load_model(f"../../../models/{model_id}")
     x_test_pred = model.predict(x_data, verbose=0)
 
     # format predictions
-    time_steps = x_data.shape[1]
     test_mae_loss = np.mean(np.abs(x_test_pred - x_data), axis=1)
-    # test_score_df = pd.DataFrame(x_data[time_steps:])
-    test_score_df = pd.DataFrame(time_stamps[time_steps:])
-
-    # test_score_df["Timestamp"] = time_stamps[time_steps:]
+    test_score_df = pd.DataFrame(time_stamps, columns=["Timestamp"])
     test_score_df["loss"] = test_mae_loss
     test_score_df["threshold"] = THRESHOLD
     test_score_df["anomaly"] = test_score_df["loss"] > test_score_df["threshold"]
 
-    # test_score_df = pd.DataFrame(test_mae_loss, columns=["loss"])
-    # test_score_df["threshold"] = threshold
-    # test_score_df["anomaly"] = test_score_df["loss"] > test_score_df["threshold"]
-    # test_score_df["FiringRate"] = test[TIME_STEPS:]["FiringRate"]
-
-    print("this is the hook")
-    print(test_score_df)
-    print(test_score_df.shape)
-    print("this is the hook")
-
-    # cast for json serialization
-    # data = [float(x) for x in data.flatten()]
+    return_data = {
+        "Timestamp": test_score_df["Timestamp"].values.tolist(),
+        "loss": test_score_df["loss"].values.tolist(),
+        "threshold": test_score_df["threshold"].values.tolist(),
+        "anomaly": test_score_df["anomaly"].values.tolist(),
+    }
 
     return {
         "version": "0.0.1",
-        "data": test_score_df.to_json(orient="columns"),
+        "data": return_data,
         "model_id": model_id,
     }
 

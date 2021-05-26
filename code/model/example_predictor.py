@@ -59,34 +59,15 @@ if __name__ == "__main__":
     x1_train, y1_train = create_sequences(train1[["value"]], train1["value"])
     x1_test, y1_test = create_sequences(test1[["value"]], test1["value"])
 
-    # arr = np.array(
-    #     [
-    #         0.5567642450948548,
-    #         0.1335705196070794,
-    #         0.5567642450948548,
-    #         0.1335705196070794,
-    #         0.5567642450948548,
-    #         0.1335705196070794,
-    #         0.1335705196070794,
-    #         0.5567642450948548,
-    #         0.1335705196070794,
-    #         0.3451673823509671,
-    #         -0.07802634313680828,
-    #         0.3451673823509671,
-    #         0.1335705196070794,
-    #         0.5567642450948548,
-    #         0.1335705196070794,
-    #     ]
-    # )
+    time_stamps_to_pass = test1["Timestamp"][TIME_STEPS:].tolist()
 
-    # print(arr)
-    # print(arr.shape)
+    print(len(time_stamps_to_pass))
+    print(x1_test.shape)
 
-    params = {"model_id": "sensor1"}
     data = {
-        "params": params,
+        "model_id": "sensor1",
         "x_data": x1_test.tolist(),
-        "time_stamps": test1["Timestamp"].tolist(),
+        "time_stamps": time_stamps_to_pass,
     }
 
     response = requests.post(FLASK_URL, json=data)
