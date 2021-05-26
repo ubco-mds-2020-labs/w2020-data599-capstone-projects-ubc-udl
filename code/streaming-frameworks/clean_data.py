@@ -95,10 +95,14 @@ def group_check(df1):
     return None
 
 
-def test_anomaly(df1):
+def split_normal(df1):
     """
-    checks current data if sensor has been assigned a group
+    splits normal and abnormal data
 
     df1 : single sensor pandas dataframe
     """
-    df1["AM"]
+    split_df = pd.DataFrame(df1.groupby("AM"))[1]
+
+    # returns two dataframes. One of normal data
+    # one with abnormal data
+    return [split_df[0], split_df[1]]
