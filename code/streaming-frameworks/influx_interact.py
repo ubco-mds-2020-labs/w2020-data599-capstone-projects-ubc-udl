@@ -34,6 +34,7 @@ class influx_class:
     def make_query(
         self,
         location,
+        id=None,
         measurement="READINGS",
         field="val_num",
         start=None,
@@ -46,6 +47,8 @@ class influx_class:
 
         Keyword arguments:
         location -- building to query, string (example: "Campus Energy Centre")
+        id -- ID of sensor to query, list of strings
+            (example: ["p:ubcv:r:205b0392-31f31280"])
         measurements: measurement type to query, strings (default = "READINGS")
         field -- field to query, string (default = "val_num")
         start -- flux query language start, string (default = None)
@@ -95,12 +98,27 @@ class influx_class:
             |> filter(fn: (r) => r["siteRef"] == _location)
             |> filter(fn: (r) => r["_field"] == _field)"""
 
+        # adds multiple ids
+        if id is not None:
+            for i in range(0, len(id)):
+                p["_id" + str(i)] = id[i]
+
+            query += """|> filter (fn: (r) => r["uniqueID"] == _id0"""
+
+            # filter on multiple ids
+            for i in range(1, len(id)):
+                query += """ or r["uniqueID"] == _id""" + str(i)
+            query += """)"""
+
         if window:
             query += (
                 """|> aggregateWindow(every: _every, fn: mean, createEmpty: _fill)"""
             )
 
-        query += """|> drop(columns: ["_start", "_stop"])"""
+        query += (
+            """|> drop(columns: ["_start", "_stop", "_measurement","""
+            """ "_field", "typeRef", "equipRef", "siteRef", "groupRef"])"""
+        )
 
         # Instantiate the query client. Specify org and query.
         result = self.client.query_api().query_data_frame(
