@@ -189,6 +189,5 @@ if __name__ == "__main__":
 
     fit_models(data, path_to_models)
 
-    import pdb
-
-    pdb.set_trace()
+    print(data["sensor1"].keys())
+    print(data["sensor1"]["train_score_df"].head())
