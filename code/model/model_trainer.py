@@ -12,6 +12,9 @@ import pandas as pd
 import numpy as np
 
 
+# A point with a MAE larger than this threshold is labeled anomalous
+THRESHOLD = 1.5
+
 TIME_STEPS = 15
 
 
@@ -34,9 +37,10 @@ def create_sequences(X, y, time_steps=TIME_STEPS):
     return np.array(Xs), np.array(ys)
 
 
-def create_general_lstm_model(shape1, shape2):
+def create_general_lstm_model(shape1, shape2, num_units=128, dropout_rate=0.2):
     """
     Generate the LSTM model
+    Currently hard coded to two LSTM layers
 
     parameters:
     shape1: int, X_train.shape[1]
@@ -45,11 +49,11 @@ def create_general_lstm_model(shape1, shape2):
     returns: keras model
     """
     model = Sequential()
-    model.add(LSTM(128, input_shape=(shape1, shape2)))
-    model.add(Dropout(rate=0.2))
+    model.add(LSTM(num_units, input_shape=(shape1, shape2)))
+    model.add(Dropout(rate=dropout_rate))
     model.add(RepeatVector(shape1))
-    model.add(LSTM(128, return_sequences=True))
-    model.add(Dropout(rate=0.2))
+    model.add(LSTM(num_units, return_sequences=True))
+    model.add(Dropout(rate=dropout_rate))
     model.add(TimeDistributed(Dense(shape2)))
     model.compile(optimizer="adam", loss="mae")
     return model
@@ -74,7 +78,7 @@ def fit_model(x_train, y_train, model=None):
         batch_size=32,
         validation_split=0.1,
         callbacks=[
-            keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, mode="min")
+            keras.callbacks.EarlyStopping(monitor="val_loss", patience=3, mode="min")
         ],
         shuffle=False,
     )
@@ -85,6 +89,7 @@ def fit_model(x_train, y_train, model=None):
 def fit_models(data_dict, model_save_loc):
     """
     takes the data_dict and trains and saves a model for each of the data
+    modifies the input data_dict to have a train predictions dataframe
 
     data_dict: dict with {data_name: data}
 
@@ -92,12 +97,22 @@ def fit_models(data_dict, model_save_loc):
     """
 
     for key in data_dict:
+
+        # train model
         x_train = data_dict[key]["x_train"]
         y_train = data_dict[key]["y_train"]
         model, _ = fit_model(x_train, y_train)
         model.save(model_save_loc + key, save_format="h5")
 
-        # TODO predict on train data and return predictions
+        # predict on train set
+        x_train_pred = model.predict(x_train, verbose=0)
+        train_mae_loss = np.mean(np.abs(x_train_pred - x_train), axis=1)
+        train_score_df = pd.DataFrame(data_dict[key]["train"][TIME_STEPS:])
+        train_score_df["loss"] = train_mae_loss
+        train_score_df["threshold"] = THRESHOLD
+        train_score_df["anomaly"] = train_score_df["loss"] > train_score_df["threshold"]
+        train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["value"]
+        data_dict[key]["train_score_df"] = train_score_df
 
 
 if __name__ == "__main__":
@@ -117,6 +132,10 @@ if __name__ == "__main__":
     df1["value"] = df1["value"].apply(lambda x: float(x.strip("%")) / 100)
     df2["value"] = df2["value"].apply(lambda x: float(x.strip("ppm")))
 
+    train11 = df1.tail(5000).head(4000).copy(deep=True)
+    test11 = df1.tail(5000).tail(1000).copy(deep=True)
+    train22 = df2.tail(5000).head(4000).copy(deep=True)
+    test22 = df2.tail(5000).tail(1000).copy(deep=True)
     train1 = df1.tail(5000).head(4000)
     test1 = df1.tail(5000).tail(1000)
     train2 = df2.tail(5000).head(4000)
@@ -142,13 +161,21 @@ if __name__ == "__main__":
             "x_test": x1_test,
             "y_train": y1_train,
             "y_test": y1_test,
+            "train": train11,
+            "test": test11,
         },
         "sensor2": {
             "x_train": x2_train,
             "x_test": x2_test,
             "y_train": y2_train,
             "y_test": y2_test,
+            "train": train22,
+            "test": test22,
         },
     }
 
     fit_models(data, path_to_models)
+
+    import pdb
+
+    pdb.set_trace()
