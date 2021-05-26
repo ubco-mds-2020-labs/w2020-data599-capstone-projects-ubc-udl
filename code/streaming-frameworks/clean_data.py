@@ -27,6 +27,10 @@ def add_anomalies(df1, df2):
     # that were not pre-labelled
     df1["AM"].replace(np.NaN, False, inplace=True)
 
+    # update all machine values where there are human inputs
+    cond = ~df1["AH"].isna()
+    df1["AM"].loc[cond] = df1["AH"].loc[cond]
+
     return df1
 
 
@@ -89,3 +93,12 @@ def group_check(df1):
             return group
 
     return None
+
+
+def test_anomaly(df1):
+    """
+    checks current data if sensor has been assigned a group
+
+    df1 : single sensor pandas dataframe
+    """
+    df1["AM"]
