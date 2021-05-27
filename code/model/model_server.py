@@ -1,5 +1,5 @@
 """
-Preps the data from sensor2 to be trained or predicted
+Serves predictions via flask
 """
 from tensorflow import keras
 

@@ -34,6 +34,23 @@ def create_sequences(X, y, time_steps=TIME_STEPS):
 
 FLASK_URL = "http://127.0.0.1:5000/"
 
+
+def get_predictions(x_data, time_stamps, model_id, url=FLASK_URL):
+    """
+    x_data : np array of shape (num_rows, window_size, 1), this is the windowed data
+    time_stamps: np array of length equal to the number of points to predict on
+    """
+    data = {
+        "model_id": model_id,
+        "x_data": x_data.tolist(),
+        "time_stamps": time_stamps,
+    }
+
+    response = requests.post(FLASK_URL, json=data)
+    response_json = json.loads(response.content)
+    return pd.DataFrame.from_dict(response_json["data"], orient="columns")
+
+
 if __name__ == "__main__":
 
     data_save_loc = "../../../data/"
@@ -72,6 +89,8 @@ if __name__ == "__main__":
 
     response = requests.post(FLASK_URL, json=data)
     response_json = json.loads(response.content)
-    print(response_json["data"])
     df = pd.DataFrame.from_dict(response_json["data"], orient="columns")
     print(df.head())
+
+    fd = get_predictions(x1_test, time_stamps_to_pass, "sensor1")
+    print(fd.head())
