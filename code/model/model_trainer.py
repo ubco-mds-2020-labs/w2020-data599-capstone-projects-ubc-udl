@@ -74,7 +74,7 @@ def fit_model(x_train, y_train, model=None):
     history = model.fit(
         x_train,
         y_train,
-        epochs=2,
+        epochs=100,
         batch_size=32,
         validation_split=0.1,
         callbacks=[
