@@ -3,6 +3,12 @@ import clean as cl
 import os
 import model_trainer as mt
 
+"""
+This wil just create a model for every sensor that is queried. 
+Some code is semipseudo code for untill InfluxDB is going.
+"""
+
+
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
 
@@ -17,6 +23,7 @@ url = "http://206.12.92.81:8086"
 influxdb = ii.influx_class(org, url, bucket, token)
 
 # provides main bucket data, no anomaly labelling
+# Readings looks like it coule be Number instead
 main_bucket = influxdb.make_query(building_list, measurements="READINGS")
 
 # provides training bucket data
@@ -42,10 +49,13 @@ for key, df in main_bucket.items():
         cl.add_anomalies(df, training_bucket[key])
     )
 
+    # creates arrays for sliding windows
     x_train, y_train = mt.create_sequences(
         normal_bucket[key][["Value"]], normal_bucket[key]["Value"]
     )
 
+    # format needed for fit model
     normal_dict = cl.model_parser(normal_bucket[key], x_train, y_train)
 
+    # creates model file for training data.
     mt.fit_models(normal_dict, "Path to where models saved")
