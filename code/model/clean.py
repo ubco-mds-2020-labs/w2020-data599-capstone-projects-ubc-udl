@@ -1,8 +1,4 @@
 import pandas as pd
-import numpy as np
-
-# could potentially use other methods of standardizing
-# if we don't want to use this package
 from sklearn.preprocessing import StandardScaler
 
 
@@ -20,18 +16,18 @@ def add_anomalies(df1, df2):
     df1["Datetime"] = pd.to_datetime(df1["Datetime"])
     df2["Datetime"] = pd.to_datetime(df2["Datetime"])
 
-    # join dataframes adding anomaly columns
-    df1 = df1.combine_first(df2)
+    # labels all main bucket normal
+    df1["AM"] = False
 
-    # add false to all anomalies in machine column
-    # that were not pre-labelled
-    df1["AM"].replace(np.NaN, False, inplace=True)
+    # join dataframes adding anomaly columns
+    # adds false values to new data
+    df2 = df2.combine_first(df1)
 
     # update all machine values where there are human inputs
-    cond = ~df1["AH"].isna()
-    df1["AM"].loc[cond] = df1["AH"].loc[cond]
+    cond = ~df2["AH"].isna()
+    df2["AM"].loc[cond] = df2["AH"].loc[cond]
 
-    return df1
+    return df2
 
 
 def split_sensors(df1):
@@ -45,12 +41,12 @@ def split_sensors(df1):
     # seperates single dataframe into multiples with each sensor
     # appends to list
     split_df = pd.DataFrame(df1.groupby("uniqueID"))[1]
-    sensor_bucket = []
+    sensor_bucket = {}
 
     # couldn't find a way to vectorize this process
     # dropped and renamed columns to be returned to once InfluxDB is running
     for i in range(0, len(split_df)):
-        sensor_bucket.append(
+        sensor_bucket[split_df[i]["uniqueID"].any()] = (
             split_df[i]
             .reset_index()
             .drop(["index", "result", "table"], axis=1)
@@ -92,7 +88,7 @@ def group_check(df1):
             group = list(group_csv.columns)[i]
             return group
 
-    return None
+    return df1["ID"].any()
 
 
 def split_normal(df1):
@@ -105,4 +101,7 @@ def split_normal(df1):
 
     # returns two dataframes. One of normal data
     # one with abnormal data
-    return [split_df[0], split_df[1]]
+    return (
+        split_df[0].reset_index().drop("index", axis=1),
+        split_df[1].reset_index().drop("index", axis=1),
+    )
