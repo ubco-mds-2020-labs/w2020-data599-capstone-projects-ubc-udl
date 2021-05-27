@@ -74,7 +74,7 @@ def fit_model(x_train, y_train, model=None):
     history = model.fit(
         x_train,
         y_train,
-        epochs=100,
+        epochs=2,
         batch_size=32,
         validation_split=0.1,
         callbacks=[
@@ -123,7 +123,7 @@ def fit_models(data_dict, model_save_loc):
         train_score_df["loss"] = train_mae_loss
         train_score_df["threshold"] = THRESHOLD
         train_score_df["anomaly"] = train_score_df["loss"] > train_score_df["threshold"]
-        train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["value"]
+        train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["Value"]
         data_dict[key]["train_score_df"] = train_score_df
 
 

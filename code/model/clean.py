@@ -105,3 +105,23 @@ def split_normal(df1):
         split_df[0].reset_index().drop("index", axis=1),
         split_df[1].reset_index().drop("index", axis=1),
     )
+
+
+def model_parser(df1, x_train, y_train):
+    """
+    changes columns to
+
+    df1 : single sensor pandas dataframe
+    """
+    dict_data = {
+        df1["ID"].any(): {
+            "x_train": x_train,
+            "y_train": y_train,
+            "x_test": "_",
+            "y_test": "_",
+            "train": df1,
+            "test": "_",
+        }
+    }
+
+    return dict_data
