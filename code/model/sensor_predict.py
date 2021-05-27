@@ -1,5 +1,5 @@
 """
-asdf
+makes prediction on one set of data with one model
 """
 
 from tensorflow import keras
@@ -7,10 +7,8 @@ from tensorflow import keras
 import pandas as pd
 import numpy as np
 
-THRESHOLD = 1.5
 
-
-def make_prediction(model_id, x_data, time_stamps):
+def make_prediction(model_id, x_data, time_stamps, threshold):
     """
     model_id: string, name of the model to load
     x_data: np array of shape (num_rows, time_steps, 1)
@@ -24,7 +22,7 @@ def make_prediction(model_id, x_data, time_stamps):
     test_mae_loss = np.mean(np.abs(x_test_pred - x_data), axis=1)
     test_score_df = pd.DataFrame(time_stamps, columns=["Timestamp"])
     test_score_df["loss"] = test_mae_loss
-    test_score_df["threshold"] = THRESHOLD
+    test_score_df["threshold"] = threshold
     test_score_df["anomaly"] = test_score_df["loss"] > test_score_df["threshold"]
 
     return_data = {
