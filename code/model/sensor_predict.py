@@ -38,7 +38,9 @@ model_id = {}
 
 for key, df in main_bucket.items():
     # creates standardized column for each sensor in main bucket
-    main_bucket[key]["Stand_Val"] = cl.standardize_values(df[["Value"]])
+    main_bucket[key]["Stand_Val"] = cl.std_val_predict(
+        df[["Value"]], main_bucket[key]["ID"].any()
+    )
 
     # creates arrays for sliding windows
     x_data, y_data = mt.create_sequences(
