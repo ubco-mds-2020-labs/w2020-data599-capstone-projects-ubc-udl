@@ -47,11 +47,27 @@ Helping implement the Telegraf parser to support getting streaming data into Inf
 
 | Nate | Mitch | Ryan | All |
 | --- | --- | --- | --- |
-| Build Streaming Framework and Test Locally, Project Management | Ongoing Anomaly Detection Research | Ongoing EDA, Help with Anomaly Detection Research, Support Telegraf Parsing | Meet with Domain Experts |
+| Build Streaming Framework and Test Locally, Project Management, Build Anomaly Labeller App, Manually Label Anomalies | Ongoing Anomaly Detection Research, Start Building LSTM | Ongoing EDA, Help with Anomaly Detection Research, Support Telegraf Parsing, Manually Label Anomalies | Meet with Domain Experts |
 
 **Notes:** 
 
 - Felt that additional time was required on anomaly detection research before building the model. Accordingly, building the model was moved to Week 4.
 - Also, with the ongoing EDA this week data cleaning will was largely moved to Week 4.
-- An additional item not included in the schedule was research of good anomaly detection performance measures, this week be completed early next week.
-- We will need to self-label anomalies in the dataset.
+- An additional item not included in the schedule was research of good anomaly detection performance measures, this will be completed early next week.
+- Also needed to manually download data and self-label what we consider to be anomalies in the datasets. Five sensors were downloaded and labelled (2 of which required comments from EWS).
+
+**Week 4: Anomaly Detection Model Continued**
+
+The original proposal goal for the fourth project week was implementing the anomaly detection model. However, as discussed above for Week 3, several tasks were behind the proposal schedule. Therefore, the goals for this week were to complete the anomaly detection model and evaluate the labelled datasets from the previous week.
+
+- Mid-Project Status Presentation
+- Complete Anomaly Detection Model Pipeline
+- Evaluate Downloaded Datasets
+
+The five sensors downloaded were evaluated using the various labelling permutations discussed in `/data/labelled-skyspark-data`. It was discussed that additional self-labelling would not be completed as it is very time intensive. Instead, assessment using the five sensors would be completed and additional assessment would just be completed on unlabelled data.
+
+An additional task looked at was research on using a Spectral Residual transformation on the data as a step before the LSTM model.
+
+| Nate | Mitch | Ryan | All |
+| --- | --- | --- | --- |
+| Project Status Report, Spectral Residual Research, Support on Model Pipeline | LSTM Model | Cleaning Pipeline | Model Evaluation |
