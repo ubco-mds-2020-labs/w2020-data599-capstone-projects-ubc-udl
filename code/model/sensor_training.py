@@ -4,7 +4,7 @@ import os
 import model_trainer as mt
 
 """
-This wil just create a model for every sensor that is queried. 
+This wil just create a model for every sensor that is queried.
 Some code is semipseudo code for untill InfluxDB is going.
 """
 

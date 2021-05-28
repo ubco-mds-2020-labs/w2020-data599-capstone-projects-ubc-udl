@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+from pickle import dump, load
 
 
 def add_anomalies(df1, df2):
@@ -56,17 +57,39 @@ def split_sensors(df1):
     return sensor_bucket
 
 
-def standardize_values(col1):
+def std_val_train(col1, id):
     """
     checks current data against pre-existing anomaly labels
 
     col1 : single sensor pandas int column
     """
-
+    # file path TBD
+    file_name = id + "_scaler.pkl"
+    file_path = "../standardize-parameters/"
     # create scaler object
     scale = StandardScaler()
     # apply to pandas column
     st_col1 = scale.fit_transform(col1)
+
+    # save scaler parameters
+    dump(scale, open(file_path + file_name, "wb"))
+
+    return st_col1
+
+
+def std_val_predict(col1, id):
+    """
+    checks current data against pre-existing anomaly labels
+
+    col1 : single sensor pandas int column
+    """
+    # file path TBD
+    file_name = id + "_scaler.pkl"
+    file_path = "../standardize-parameters/"
+    # create scaler object
+    scale = load(open(file_path + file_name, "rb"))
+    # apply to pandas column
+    st_col1 = scale.transform(col1)
 
     return st_col1
 

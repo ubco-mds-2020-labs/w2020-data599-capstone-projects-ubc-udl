@@ -128,12 +128,13 @@ class influx_class:
         return result
 
     # TODO: potentially modify write options
-    def write_data(self, df):
+    def write_data(self, df, measurement):
         """
         Write to InfluxDB
 
         Keyword arguments:
         df: data to write to InfluxDB, Pandas DataFrame
+        measurement: group name, string (ie. CHECK_ANOMALY, TRAINING)
 
         Returns:
         None
@@ -147,7 +148,7 @@ class influx_class:
             self.bucket,
             self.org,
             record=df_write,
-            data_frame_measurement_name="CHECK_ANOMALY",
+            data_frame_measurement_name=measurement,
             data_frame_tag_columns=["uniqueID"],
         )
 
