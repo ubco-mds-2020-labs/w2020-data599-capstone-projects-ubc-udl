@@ -123,7 +123,7 @@ def fit_models(data_dict, model_save_loc):
         train_score_df["loss"] = train_mae_loss
         train_score_df["threshold"] = THRESHOLD
         train_score_df["anomaly"] = train_score_df["loss"] > train_score_df["threshold"]
-        train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["value"]
+        train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["Value"]
         data_dict[key]["train_score_df"] = train_score_df
 
 
