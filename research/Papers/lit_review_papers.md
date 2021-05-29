@@ -23,3 +23,4 @@
 - https://webdocs.cs.ualberta.ca/~zaiane/postscript/DAWAK19.pdf
 - https://www.sciencedirect.com/science/article/pii/S2542660519300241 (models all basically preformed equally well, making this paper uninformative)
 - https://www.sciencedirect.com/science/article/pii/S0360132320305837 (compares many models, concludes lstm-ed to be superior for contextual detection)
+

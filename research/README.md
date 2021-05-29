@@ -12,6 +12,7 @@ Contains research based components of the project including:
     - `comparison_of_packages.xlsx` provides comment on several packages that are available for anomaly detection in python (however, it was decided to build our own LSTM in Keras ultimately)
     - contains the `model-demo` folder which includes initial testing on various packages and the high-level tests on an LSTM model
 - `papers` folder provides references used in the project (ongoing)
+- `SR-testing` testing spectral residual transformations on the manually labelled [datasets](../data/labelled-skyspark-data/)
 - `streaming-methods` folder includes various tests on streaming methods that could be used with InfluxDB
     - completed when trying to understand how the detection streaming framework with InfluxDB and what tools/packages would be required to implement it
     - contains `README.md` in the folder for description of findings
