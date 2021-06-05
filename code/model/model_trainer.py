@@ -86,7 +86,7 @@ def fit_model(x_train, y_train, model=None):
     return model, history
 
 
-def fit_models(data_dict, model_save_loc):
+def fit_models(data_dict, model_save_loc, threshold=THRESHOLD):
     """
     takes the data_dict and trains and saves a model for each of the data
     modifies the input data_dict to have a train predictions dataframe
@@ -121,7 +121,7 @@ def fit_models(data_dict, model_save_loc):
         train_mae_loss = np.mean(np.abs(x_train_pred - x_train), axis=1)
         train_score_df = pd.DataFrame(data_dict[key]["train"][TIME_STEPS:])
         train_score_df["loss"] = train_mae_loss
-        train_score_df["threshold"] = THRESHOLD
+        train_score_df["threshold"] = threshold
         train_score_df["anomaly"] = train_score_df["loss"] > train_score_df["threshold"]
         train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["Value"]
         data_dict[key]["train_score_df"] = train_score_df
