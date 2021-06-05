@@ -57,15 +57,13 @@ def split_sensors(df1):
     return sensor_bucket
 
 
-def std_val_train(col1, id):
+def std_val_train(col1, id, file_path="../standardize-parameters/"):
     """
     checks current data against pre-existing anomaly labels
 
     col1 : single sensor pandas int column
     """
-    # file path TBD
     file_name = id + "_scaler.pkl"
-    file_path = "../standardize-parameters/"
     # create scaler object
     scale = StandardScaler()
     # apply to pandas column
@@ -77,15 +75,13 @@ def std_val_train(col1, id):
     return st_col1
 
 
-def std_val_predict(col1, id):
+def std_val_predict(col1, id, file_path="../standardize-parameters/"):
     """
     checks current data against pre-existing anomaly labels
 
     col1 : single sensor pandas int column
     """
-    # file path TBD
     file_name = id + "_scaler.pkl"
-    file_path = "../standardize-parameters/"
     # create scaler object
     scale = load(open(file_path + file_name, "rb"))
     # apply to pandas column
