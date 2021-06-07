@@ -9,7 +9,10 @@ from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 PATH_TO_CSVS = "../../data/labelled-skyspark-data/"
-CSVS_TO_LOAD = ["CEC_compiled_data_1b_updated.csv", "CEC_compiled_data_5b_updated.csv"]
+CSVS_TO_LOAD = [
+    "CEC_compiled_data_1b_updated.csv",
+    "CEC_compiled_data_5b_updated.csv",
+]
 
 if __name__ == "__main__":
 
