@@ -71,3 +71,16 @@ An additional task looked at was research on using a Spectral Residual transform
 | Nate | Mitch | Ryan | All |
 | --- | --- | --- | --- |
 | Project Status Report, Spectral Residual Research, Support on Model Pipeline, Research LSTM architectures | LSTM Model | Cleaning Pipeline | Model Evaluation |
+
+**Week 5: Model Tuning and Implementation**
+
+The original proposal goal for the fifth project week was completing any tasks that gave the most value to the project. The week was used to complete several tasks behind schedule including:
+
+- Implementing the anomaly detection framework with InfluxDB
+- Tuning model performance
+
+Reporting was also started this week.
+
+| Nate | Mitch | Ryan | All |
+| --- | --- | --- | --- |
+| Project Management, Report | LSTM Model Tuning | Model Implementation | Status Presentation |

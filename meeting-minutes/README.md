@@ -7,4 +7,5 @@
     - `streaming_options.pptx` - file used to discuss various streaming frameworks
     - `20210521_TechSafety.pptx` - presentation given at meeting with Technical Safety BC meeting
     - `20210521_TechSafety.docs` - brief meeting minutes from Technical Safety BC meeting
+    - `20210604_CEC.pptx` - presentation given to Jason Rako from UBC Energy and Water Services
 
