@@ -2,7 +2,8 @@
 
 ## Step 1
 
-Navigate to your influx docker compose (This was setup and tested using `docker-files/one-telegraf/`) Then run `docker-compose up`  
+Navigate to your influx docker compose (This was setup and tested using `docker-files/one-telegraf/`) Then run `docker-compose up`.  
+It is recommended to increase the ram available to docker from the default of 2gb to 5gb.
 
 ## Step 1.1
 
@@ -11,6 +12,8 @@ Go to `http://localhost:8086/` and enter `MDS2021` as user name and `mypassword`
 ## Step 2
 
 Run `populate_influx.py` to put csvs from the data directory into the influx running in docker from step 1. This python file is currently set up to upload only two csvs and it can easily be edited to upload more.
+
+N.B `populate_influx.py` times out reguardless of the `timeout` parmaeter in the influx client call, solution is to rerun this file until it completes
 
 ## Step 3
 
