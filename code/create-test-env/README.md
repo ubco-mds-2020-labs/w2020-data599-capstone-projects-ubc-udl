@@ -1,24 +1,27 @@
-# Test Envrionment Creation Steps
+# Test Environment
+
+`Requirements.txt` provides the list of Python packages required to use the test environment.
+
+The notebook file `test_env_demo.ipynb` provides a walkthrough of using the anomaly detection framework in a test environment. This test environment was used as UDL's InfluxDB instance was still being setup with SkySpark data during the project. The test environment populates an instance of InfluxDB (created using Docker) with sensor data from `../../data/labelled-skyspark-data/`. The sensor data was manually downloaded from SkySpark and corresponds with five sensors used in Phase 1 model testing.
+
+It is recommended to use the notebook as it provides a detailed commentary. However, the process can also be completed using the scripts `populate_influx.py`, `test_env_scheduled_trainer.py`, and `test_env_scheduled_trainer.py` using the steps discussed below:
 
 ## Step 1
 
-Navigate to your influx docker compose (This was setup and tested using `docker-files/one-telegraf/`) Then run `docker-compose up`.  
-It is recommended to increase the ram available to docker from the default of 2gb to 5gb.
+Copy `docker-compose.yml` located in this directory to a local directory. Then run the command `docker-compose up` from this local directory. It is recommended to increase the ram available to docker from the default of 2gb to 5gb.
 
-## Step 1.1
-
-Go to `http://localhost:8086/` and enter `MDS2021` as user name and `mypassword` to log in, you will need to create the `MDS2021` bucket
+Go to `http://localhost:8086/` and enter `MDS2021` as user name and `mypassword` to log in. You will need to create the `MDS2021` bucket if it is not already created.
 
 ## Step 2
 
-Run `populate_influx.py` to put csvs from the data directory into the influx running in docker from step 1. This python file is currently set up to upload only two csvs and it can easily be edited to upload more.
+Navigate back to this directory and run `populate_influx.py`. This will populate InfluxDB with csv files located in `../../data/labelled-skyspark-data/`. These files correspond with the Phase 1 model testing.
 
-N.B `populate_influx.py` times out reguardless of the `timeout` parmaeter in the influx client call, solution is to rerun this file until it completes
+N.B `populate_influx.py` times out regardless of the `timeout` parameter in the influx client call, solution is to rerun this file until it completes
 
 ## Step 3
 
-Run `test_env_scheduled_trainer.py` to create and save models as well as standard scalers for each data set. Can be put on a cron for simulated re training
+Run `test_env_scheduled_trainer.py`. This will provide anomaly detection model training and will save model files for each data set in `test_env_models\` and `test_env_standardizers`. A cron job can be used on this script to simulate model retraining. The script will also write the training results to InfluxDB in the TRAINING_ANOMALY Measurement.
 
 ## Step 4
 
-Run `test_env_scheduled_predictor.py` to create simulated real time predictions. A wait can be included in the prediction loop to simulate waiting a given time period between predictions
+Run `test_env_scheduled_trainer.py`. This will provide anomaly detection predictions. It loads the model files saved in Step 4. A wait can be included in the prediction loop to simulate waiting a given time period between predictions. Predictions will be written to InfluxDB in the PREDICT_ANOMALY Measurement.
