@@ -8,4 +8,4 @@ Note that the idea came from Microsoft's use of spectral residual in their [SR-C
 
 The `images\` folder contains various images referenced in the notebook file.
 
-Overall, it is recommended to try the SR transformation with the LSTM as it looks like it could help highlight anomalies; however, as also discussed in the notebook, there are types of anomalous data that the transformation could make harder to detect.
+Overall, it could be useful to use the SR transformation with the LSTM as it looks like it could help highlight anomalies; however, as also discussed in the notebook, there are types of anomalous data that the transformation could make harder to detect. There was not sufficient time in this study to test the SR transformation but this is something that could be looked at in the future.
