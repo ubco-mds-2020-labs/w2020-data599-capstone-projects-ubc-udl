@@ -127,7 +127,6 @@ class influx_class:
 
         return result
 
-    # TODO: potentially modify write options
     def write_data(self, df, measurement):
         """
         Write to InfluxDB
@@ -140,14 +139,10 @@ class influx_class:
         None
         """
 
-        df_write = df.loc[:, ["_value", "uniqueID", "anomaly"]]
-        # TODO: replace with better code for naming _value field
-        df_write.rename(columns={"_value": "val_num"}, inplace=True)
-
         self.client.write_api(write_options=SYNCHRONOUS).write(
             self.bucket,
             self.org,
-            record=df_write,
+            record=df,
             data_frame_measurement_name=measurement,
             data_frame_tag_columns=["uniqueID"],
         )

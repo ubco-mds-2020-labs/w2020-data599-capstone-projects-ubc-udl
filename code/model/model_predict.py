@@ -8,15 +8,17 @@ import pandas as pd
 import numpy as np
 
 
-def make_prediction(model_id, x_data, time_stamps, threshold):
+def make_prediction(model_id, x_data, time_stamps, threshold, model_path):
     """
     model_id: string, name of the model to load
     x_data: np array of shape (num_rows, time_steps, 1)
     time_stamps: time_stamps: list, timestamps of prediction points,
     find this out before passing
+    threshold: float, for flagging as anomalous
+    model_path: string, path to saved model
     """
     # make predictions
-    model = keras.models.load_model(f"../../../models/{model_id}")
+    model = keras.models.load_model(model_path + model_id)
     x_test_pred = model.predict(x_data, verbose=0)
 
     # format predictions

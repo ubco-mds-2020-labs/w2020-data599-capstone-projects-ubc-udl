@@ -24,7 +24,7 @@ influxdb = ii.influx_class(org, url, bucket, token)
 
 # provides main bucket data, no anomaly labelling
 # Readings looks like it coule be Number instead
-main_bucket = influxdb.make_query(building_list, measurements="READINGS")
+main_bucket = influxdb.make_query(building_list, measurement="READINGS")
 
 # provides training bucket data
 training_bucket = influxdb.make_query(building_list, measurement="TRAINING")
