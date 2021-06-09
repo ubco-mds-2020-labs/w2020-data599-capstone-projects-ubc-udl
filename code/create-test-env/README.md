@@ -1,5 +1,6 @@
 # Test Environment Creation Steps
 
+`Requirements.txt` provides the list of Python packages required to use the test environment.
 ## Step 1
 
 Copy `docker-compose.yml` located in this directory to a local directory. Then run the command `docker-compose up` from this local directory. It is recommended to increase the ram available to docker from the default of 2gb to 5gb.

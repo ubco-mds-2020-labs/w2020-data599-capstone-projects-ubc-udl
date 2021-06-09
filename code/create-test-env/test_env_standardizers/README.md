@@ -1,1 +1,1 @@
-holds scalers for test env
+Holds standard scalers for test environment.
