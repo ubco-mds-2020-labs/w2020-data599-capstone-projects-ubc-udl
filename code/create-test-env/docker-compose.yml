@@ -1,0 +1,19 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:2.0.6
+    volumes:
+      # Mount for influxdb data directory and configuration
+      - ./data:/var/lib/influxdb2
+      - ./config:/etc/influxdb2
+    ports:
+      - "8086:8086"
+    environment: 
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=myuser
+      - DOCKER_INFLUXDB_INIT_PASSWORD=passwordpassword
+      - DOCKER_INFLUXDB_INIT_ORG=myorg
+      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=mytoken
+
+

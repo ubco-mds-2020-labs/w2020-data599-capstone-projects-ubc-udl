@@ -1,24 +1,23 @@
-# Test Envrionment Creation Steps
+# Test Environment Creation Steps
 
 ## Step 1
 
-Navigate to your influx docker compose (This was setup and tested using `docker-files/one-telegraf/`) Then run `docker-compose up`.  
-It is recommended to increase the ram available to docker from the default of 2gb to 5gb.
-
-## Step 1.1
-
-Go to `http://localhost:8086/` and enter `MDS2021` as user name and `mypassword` to log in, you will need to create the `MDS2021` bucket
+Copy `docker-compose.yml` located in this directory to a local directory. Then run the command `docker-compose up` from this local directory. It is recommended to increase the ram available to docker from the default of 2gb to 5gb.
 
 ## Step 2
 
-Run `populate_influx.py` to put csvs from the data directory into the influx running in docker from step 1. This python file is currently set up to upload only two csvs and it can easily be edited to upload more.
-
-N.B `populate_influx.py` times out reguardless of the `timeout` parmaeter in the influx client call, solution is to rerun this file until it completes
+Go to `http://localhost:8086/` and enter `MDS2021` as user name and `mypassword` to log in. You will need to create the `MDS2021` bucket
 
 ## Step 3
 
-Run `test_env_scheduled_trainer.py` to create and save models as well as standard scalers for each data set. Can be put on a cron for simulated re training
+Navigate back to this directory and run `populate_influx.py`. This will populate InfluxDB with csv files located in `../../data/labelled-skyspark-data/`. These files correspond with the Phase 1 model testing.
+
+N.B `populate_influx.py` times out regardless of the `timeout` parameter in the influx client call, solution is to rerun this file until it completes
 
 ## Step 4
 
-Run `test_env_scheduled_predictor.py` to create simulated real time predictions. A wait can be included in the prediction loop to simulate waiting a given time period between predictions
+Run `test_env_scheduled_trainer.py`. This will provide anomaly detection model training and will save model files for each data set in `test_env_models\` and `test_env_standardizers`. A cron job can be used on this script to simulate model retraining. The script will also write the training results to InfluxDB in the TRAINING_ANOMALY Measurement.
+
+## Step 5
+
+Run `test_env_scheduled_trainer.py`. This will provide anomaly detection predictions. It loads the model files saved in Step 4. A wait can be included in the prediction loop to simulate waiting a given time period between predictions. Predictions will be written to InfluxDB in the PREDICT_ANOMALY Measurement.
