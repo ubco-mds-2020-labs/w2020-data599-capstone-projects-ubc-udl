@@ -1,6 +1,7 @@
 # Test Environment To-Do List
 
-Note that many of the items in the list below are written based on the notebook, but many apply to `test_env_scheduled_predictor.py` and `test_env_scheduled_trainer.py` as well. Recommend fixing the notebook and then going through these two scripts at the end and updated.
+Note that many of the items in the list below are written based on the notebook, but many apply to `test_env_scheduled_predictor.py` and `test_env_scheduled_trainer.py` as well. Recommend fixing the notebook and then going through these two scripts at the end and updated. `README.md` also will likely need to be updated at the end.
+
 ## General:
 
 - Should include a requirements.txt file
@@ -27,3 +28,5 @@ Note that many of the items in the list below are written based on the notebook,
 
 ## Step 4:
 
+- similar to Step 3, need to provide some comments on the Start/End time formats and what it means.
+- 

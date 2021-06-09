@@ -1,6 +1,11 @@
-# Test Environment Creation Steps
+# Test Environment
 
 `Requirements.txt` provides the list of Python packages required to use the test environment.
+
+The notebook file `test_env_demo.ipynb` provides a walkthrough of using the anomaly detection framework in a test environment. This test environment was used as UDL's InfluxDB instance was still being setup with SkySpark data during the project. The test environment populates an instance of InfluxDB (created using Docker) with sensor data from `../../data/labelled-skyspark-data/`. The sensor data was manually downloaded from SkySpark and corresponds with five sensors used in Phase 1 model testing.
+
+It is recommended to use the notebook as it provides a detailed commentary. However, the process can also be completed using the scripts `populate_influx.py`, `test_env_scheduled_trainer.py`, and `test_env_scheduled_trainer.py` using the steps discussed below:
+
 ## Step 1
 
 Copy `docker-compose.yml` located in this directory to a local directory. Then run the command `docker-compose up` from this local directory. It is recommended to increase the ram available to docker from the default of 2gb to 5gb.
