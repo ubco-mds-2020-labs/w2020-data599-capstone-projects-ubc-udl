@@ -25,7 +25,7 @@ if __name__ == "__main__":
     org = "UBC"
     bucket = "MDS2021"
 
-    # setup InfluxDB
+    # setup InfluxDB client
     client = InfluxDBClient(url="http://localhost:8086", token=token, timeout=999_000)
     write_api = client.write_api(write_options=SYNCHRONOUS)
 
