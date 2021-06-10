@@ -24,12 +24,14 @@ The Urban Data Lab (UDL) advances data access, data management and data analytic
 
 The approach used in this study provides near real-time anomaly detection with InfluxDB. Anomaly detection model training is completed by querying sensor data from InfluxDB on an infrequent basis and saving the trained models. Anomaly detection prediction occurs on a continuous basis by reading recent data from InfluxDB, loading and running the previously trained models, and writing the results back to InfluxDB. A subset of Campus Energy Sensor (CEC) boiler sensors available in SkySpark was selected for the study to test this approach.
 
-<img src="images/framework.png" alt="Anomaly Detection Framework" width="450"/>
+<p align="center">
+  <img src="images/framework.png" alt="Anomaly Detection Framework" width="450"/>
+</p>
 
 ### Anomaly Detection Model
 The anomaly detection model used in this study is a long short-term memory recurrent neural network with an encoder-decoder architecture (LSTM-ED). The LSTM-ED was selected as it provides a general model noted to have good performance in recent anomaly detection studies and should be applicable to a variety of sensors. This generalizability was a goal of the project. The model is trained in an unsupervised approach using sequence reconstruction of the input data. Anomaly prediction is then based on identification of data with high sequence reconstruction error. The study results indicate that the model has good performance on the selected subset of CEC sensors.
 
-<img src="images/LSTM-ED.png" alt="LSTM-ED" width="550"/>
+<img align="center" src="images/LSTM-ED.png" alt="LSTM-ED" width="550"/>
 
 ### Dashboard and Notification System
 
