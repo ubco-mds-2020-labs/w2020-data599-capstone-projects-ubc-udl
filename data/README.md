@@ -1,6 +1,6 @@
 # Data
 
-This folder consists of data used in model development. It will be updated during development as required.
+This folder contains data used in model development.
 
 ## unlabelled-skyspark-data
 
@@ -18,6 +18,6 @@ This folder contains the datasets from the `unlabelled-skspark-data` folder but 
 
 ## testing-data
 
-This folder contains data that has been manually altered to replicate as set of a data from an original sensor:
+This folder contains data that has been manually altered to replicate a set of a data from an original sensor:
 - training_bucket.csv: an example of data that would exist in InfluxDB's training bucket
-- main_bucket.csv: an example of data that would exist in InfluxDB's main bucket.
+- main_bucket.csv: an example of data that would exist in InfluxDB's main bucket
