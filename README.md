@@ -1,6 +1,49 @@
-# Data 599 Capstone - Realtime Anomaly Detection with Smart Building Data
+# Real-time Anomaly Detection for Building Sensors
 
-This README will be built-out during the project (note that the file structure listed below may not be up to date with the latest folders). There are also READMEs located within each of the folders for additional descriptions.
+This project was completed as the Capstone Project for the UBC Okanagan Master of Data Science (MDS) degree. The project was completed for [Urban Data Lab](https://urbandatalab.io/) by [Nathan Smith](https://github.com/WraySmith), [Mitch Harris](https://github.com/mqharris), and [Ryan Koenig](https://github.com/RyKoe).
+
+This README provides on overview of the project repository and is organized into:
+
+* [Project Description](#project-description)
+* [Research](#research)
+* [Data](#data)
+* [Code](#code)
+* [Project Documents](#project-documents)
+* [Project Management](#project-management)
+
+Note that there are READMEs provided in subfolders for additional information.
+
+## Project Description
+
+### Background
+The Urban Data Lab (UDL) advances data access, data management and data analytics capabilities on the University of British Columbia (UBC) campus with a goal of addressing campus-wide sustainability challenges. UDL has access to the UBC Energy and Water Services (EWS) SkySpark analytics platform that collects data from buildings on the UBC campus including information such as heating, ventilation and air conditioning (HVAC) equipment and energy data. UDL stores data from SkySpark in their own database using InfluxDB and have potentially erroneous data reporting from SkySpark. There is currently no system in place with InfluxDB to flag these data. The project goal was to develop a real-time anomaly detection system using open-source tools that could be used with InfluxDB.
+
+<img src="images/concept.png" alt="Project Concept" width="450"/>
+
+### Anomaly Detection Framework
+
+The approach used in this study provides near real-time anomaly detection with InfluxDB. Anomaly detection model training is completed by querying sensor data from InfluxDB on an infrequent basis and saving the trained models. Anomaly detection prediction occurs on a continuous basis by reading recent data from InfluxDB, loading and running the previously trained models, and writing the results back to InfluxDB. A subset of Campus Energy Sensor (CEC) boiler sensors available in SkySpark was selected for the study to test this approach.
+
+<img src="images/framework.png" alt="Anomaly Detection Framework" width="450"/>
+
+### Anomaly Detection Model
+The anomaly detection model used in this study is a long short-term memory recurrent neural network with an encoder-decoder architecture (LSTM-ED). The LSTM-ED was selected as it provides a general model noted to have good performance in recent anomaly detection studies and should be applicable to a variety of sensors. This generalizability was a goal of the project. The model is trained in an unsupervised approach using sequence reconstruction of the input data. Anomaly prediction is then based on identification of data with high sequence reconstruction error. The study results indicate that the model has good performance on the selected subset of CEC sensors.
+
+<img src="images/LSTM-ED.png" alt="LSTM-ED" width="550"/>
+
+### Dashboard and Notification System
+
+A dashboard and notification system were also implemented with the anomaly detection model in a test InfluxDB environment. The dashboard can be built directly in InfluxDB and provides a simple display of sensor data overlaid with anomalous flagged data. The notification system also uses built-in InfluxDB functionality and was configured to send notifications for data predicted as anomalous. 
+
+**ADD SCREENSHOT HERE**
+
+### Conclusion
+
+This study provides an initial open-source anomaly detection approach that can be used by UDL with InfluxDB. Additional studies that can be considered as next steps include implementing anomaly detection directly in-line with data being written to InfluxDB, comparison of the LSTM-ED with additional models, testing additional sensors and buildings/systems, and building more complex dashboard and notification systems.
+
+Ideally, the detection system could ultimately be used to provide campus and building managers with the real-time or near real-time notifications of potential issues in system operations reducing operational costs, downtime, and unexpected maintenance.
+
+
 ## File Structure
 
 - [code](code/) - project code used to build the anomaly detection model as well as various tools
