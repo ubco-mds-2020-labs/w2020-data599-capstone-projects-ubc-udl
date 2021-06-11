@@ -8,8 +8,8 @@ The app allows a user to upload a csv file of sensor data, visualize the data in
 
 The input csv file needs to have the following columns (in this order):
 
-- **Datetime**: Datetime format (should be able to handle most formats), the manual export format from SkySpark was tested with the app and works
-- **Value:**: A column of numeric sensor values, note that any non-numeric values will be coerced to NAs
+- **Datetime:** Datetime format (should be able to handle most formats), the manual export format from SkySpark was tested with the app and works
+- **Value:** A column of numeric sensor values, note that any non-numeric values will be coerced to NAs
 - **ID:** Any label used to identify a sensor, multiple sensors can be used in a single file and they will be plotted as different colors
 - **Anomaly:** True/False and needs to be fully populated prior to import to the app
 
@@ -23,4 +23,4 @@ The app uses the [`renv` package](https://rstudio.github.io/renv/articles/renv.h
 
 ## Demo
 
-A demo of the app is available [here](../../images/app.GIF). It includes loading a file (previously labelled) that has approximately 400,000 data points (34 MB file), interactively moving around the graph, selecting/labelling data points as anomalous, and downloading the updated file. The demo shows that while loading the graph takes some timem interacting with the graph has good performance.
+A demo of the app is available [here](../../images/app.GIF). It includes loading a file (previously labelled) that has approximately 400,000 data points (34 MB file), interactively moving around the graph, selecting/labelling data points as anomalous, and downloading the updated file. The demo shows that while loading the graph takes some time, interacting with the graph has good performance.
