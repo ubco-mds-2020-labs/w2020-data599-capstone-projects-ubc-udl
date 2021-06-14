@@ -84,3 +84,16 @@ Reporting was also started this week.
 | Nate | Mitch | Ryan | All |
 | --- | --- | --- | --- |
 | Project Management, Report | LSTM Model Tuning | Model Implementation | Status Presentation |
+
+**Week 6: Dashboard**
+
+The original proposal goal for the sixth project week was completing the Dashboard for the project. The week was also used to implement a test environment with the package in InfluxDB as it was recognized that UDL would not have historical or streaming SkySpark data available in InfluxDB in the project timeline.
+
+Final model tuning and test result organization for the report was also worked on.
+
+
+| Nate | Mitch | Ryan | All |
+| --- | --- | --- | --- |
+| Project Management, Report, Dashboard Support | Model Results | Test Environment, Dashboard | - |
+
+The Dashboard did not get completed this week and will continue next week. It was also decided to continue additional testing for the project next week. As the report is in good shape, this is considered reasonable.
