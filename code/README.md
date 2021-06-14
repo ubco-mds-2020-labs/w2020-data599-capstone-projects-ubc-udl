@@ -1,5 +1,17 @@
 # Code
 
+The Python environment used for project development can be installed using anaconda or miniconda with the following command from this directory:
+
+`conda env create -f environment.yml`
+
+This will create the `anomaly` environment which can then be activated using:
+
+`conda activate anomaly`
+
+The environment uses Python 3.7 and has influxdb-client, jupyterlab, pandas, scikit-learn, and tensorflow.
+
+Alternatively, the required packages are located in `requirements.txt`.
+
 **NOTE: should delete `simulate` and `streaming-framework` directories when we're sure we don't need anything from them anymore**
 ## docker-files
 

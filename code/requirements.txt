@@ -1,0 +1,5 @@
+jupyterlab==3.0.*
+pandas==1.2.*
+scikit-learn==0.24.*
+influxdb-client==1.18.0
+tensorflow==2.5.0
