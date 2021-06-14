@@ -6,7 +6,6 @@ Contains research based components of the project including:
 - `EDA` folder contains the initial exploratory data analysis completed for the project
     - completed on a very limited dataset accessed through manual data downloads from the SkySpark UI
     - `UDL_EDA.ipynb` provides the notebook for the analysis
-- `model-evaluation` provides the template used for model testing (tests saved [here](../code/results/))
 - `model-methods` folder contains the research associated with selecting the model to move forward with
     - LSTM model selected and comments on the selection are provided in the file `model_selection.md`
     - `performance_selection.md` provides comments on how we will evaluate the model/study
