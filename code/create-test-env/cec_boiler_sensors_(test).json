@@ -1,0 +1,544 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "CEC Boiler Sensors (Test)-Template",
+  "description": "template created from dashboard: CEC Boiler Sensors (Test)"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "CEC Boiler Sensors (Test)",
+    "description": ""
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "07b011f89b76b000"
+      },
+      {
+       "type": "cell",
+       "id": "07b011f89db6b000"
+      },
+      {
+       "type": "cell",
+       "id": "07b011f89f36b000"
+      },
+      {
+       "type": "cell",
+       "id": "07b011f8a036b000"
+      },
+      {
+       "type": "cell",
+       "id": "07b011f8a176b000"
+      },
+      {
+       "type": "cell",
+       "id": "07b015d77df6b000"
+      }
+     ]
+    },
+    "variable": {
+     "data": [
+      {
+       "type": "variable",
+       "id": "07b011f8a5dba000"
+      }
+     ]
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "07b011f89b76b000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 3,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b011f89b76b000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07b011f89db6b000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 0,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b011f89db6b000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07b011f89f36b000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 6,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b011f89f36b000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07b011f8a036b000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 3,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b011f8a036b000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07b011f8a176b000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 6,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b011f8a176b000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07b015d77df6b000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b015d77df6b000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b011f89b76b000",
+    "attributes": {
+     "name": "Campus Energy Centre Boiler B-1 Exhaust O2",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "if v.anomaly_type == \"manual\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Boiler B-1 Exhaust O2\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"manual_anomaly\"])\n  |> rename(columns: {manual_anomaly: \"anomaly\"})\n)\nelse if v.anomaly_type == \"model\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Boiler B-1 Exhaust O2\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"model_anomaly\"])\n  |> rename(columns: {model_anomaly: \"anomaly\"})\n)\nelse \n  (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PREDICT_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Boiler B-1 Exhaust O2\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"realtime_anomaly\"])\n  |> rename(columns: {realtime_anomaly: \"anomaly\"})\n)",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#31C0F6",
+       "#BC00B8",
+       "#FF7E27"
+      ],
+      "fillColumns": [
+       "anomaly"
+      ],
+      "symbolColumns": [],
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b011f89db6b000",
+    "attributes": {
+     "name": "Campus Energy Centre Campus HW Main Meter Flow",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "if v.anomaly_type == \"manual\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Flow\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"manual_anomaly\"])\n  |> rename(columns: {manual_anomaly: \"anomaly\"})\n)\nelse if v.anomaly_type == \"model\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Flow\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"model_anomaly\"])\n  |> rename(columns: {model_anomaly: \"anomaly\"})\n)\nelse \n  (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PREDICT_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Flow\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"realtime_anomaly\"])\n  |> rename(columns: {realtime_anomaly: \"anomaly\"})\n)",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#31C0F6",
+       "#BC00B8",
+       "#FF7E27"
+      ],
+      "fillColumns": [
+       "anomaly"
+      ],
+      "symbolColumns": [],
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b011f89f36b000",
+    "attributes": {
+     "name": "Campus Energy Centre Campus HW Main Meter Power",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "if v.anomaly_type == \"manual\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Power\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"manual_anomaly\"])\n  |> rename(columns: {manual_anomaly: \"anomaly\"})\n)\nelse if v.anomaly_type == \"model\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Power\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"model_anomaly\"])\n  |> rename(columns: {model_anomaly: \"anomaly\"})\n)\nelse \n  (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PREDICT_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Power\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"realtime_anomaly\"])\n  |> rename(columns: {realtime_anomaly: \"anomaly\"})\n)",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#31C0F6",
+       "#BC00B8",
+       "#FF7E27"
+      ],
+      "fillColumns": [
+       "anomaly"
+      ],
+      "symbolColumns": [],
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b011f8a036b000",
+    "attributes": {
+     "name": "Campus Energy Centre Campus HW Main Meter Entering Water Temperature",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "if v.anomaly_type == \"manual\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Entering Water Temperature\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"manual_anomaly\"])\n  |> rename(columns: {manual_anomaly: \"anomaly\"})\n)\nelse if v.anomaly_type == \"model\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Entering Water Temperature\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"model_anomaly\"])\n  |> rename(columns: {model_anomaly: \"anomaly\"})\n)\nelse \n  (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PREDICT_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Campus HW Main Meter Entering Water Temperature\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"realtime_anomaly\"])\n  |> rename(columns: {realtime_anomaly: \"anomaly\"})\n)",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#31C0F6",
+       "#BC00B8",
+       "#FF7E27"
+      ],
+      "fillColumns": [
+       "anomaly"
+      ],
+      "symbolColumns": [],
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b011f8a176b000",
+    "attributes": {
+     "name": "Campus Energy Centre Boiler B-1 Gas Pressure",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "if v.anomaly_type == \"manual\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Boiler B-1 Gas Pressure\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"manual_anomaly\"])\n  |> rename(columns: {manual_anomaly: \"anomaly\"})\n)\nelse if v.anomaly_type == \"model\"\n  then (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"TRAINING_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Boiler B-1 Gas Pressure\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"model_anomaly\"])\n  |> rename(columns: {model_anomaly: \"anomaly\"})\n)\nelse \n  (from(bucket: \"MDS2021\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"PREDICT_ANOMALY\")\n  |> filter(fn: (r) => r[\"_field\"] == \"val_num\")\n  |> filter(fn: (r) => r[\"uniqueID\"] == \"Campus Energy Centre Boiler B-1 Gas Pressure\")\n  |> keep(columns: [\"_time\", \"_value\", \"_measurement\", \"realtime_anomaly\"])\n  |> rename(columns: {realtime_anomaly: \"anomaly\"})\n)",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#31C0F6",
+       "#BC00B8",
+       "#FF7E27"
+      ],
+      "fillColumns": [
+       "anomaly"
+      ],
+      "symbolColumns": [],
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b015d77df6b000",
+    "attributes": {
+     "name": "Name this Cell",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "markdown",
+      "note": "## **Instructions**\r\nSelect from the dropdown menu which anomaly type should be viewed (realtime, model, or manual).\r\n\r\nUse the top right menu to select the time range. Note that graphs won't show any data if the time and anomaly_type selection does not include data."
+     }
+    }
+   },
+   {
+    "id": "07b011f8a5dba000",
+    "type": "variable",
+    "attributes": {
+     "name": "anomaly_type",
+     "arguments": {
+      "type": "constant",
+      "values": [
+       "manual",
+       "realtime",
+       "model"
+      ]
+     },
+     "selected": [
+      "realtime"
+     ]
+    },
+    "relationships": {
+     "label": {
+      "data": []
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}
