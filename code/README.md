@@ -29,13 +29,13 @@ Currently only contains `influxdb_query_test.ipynb` used to support understandin
 Provides code for the model training and anomaly predictions with the anomaly detection framework.
 
 <p align="center">
-  <img src="../images/framework.png" alt="Anomaly Detection Framework" width="450"/>
+  <img src="../images/framework.png" alt="Anomaly Detection Framework" width="500"/>
 </p>
 
 The model pipeline implemented is shown below (details are provided in the final report).
 
 <p align="center">
-  <img src="../images/LSTM_pipeline.png" alt="LSTM Pipeline" width="600"/>
+  <img src="../images/LSTM_pipeline.png" alt="LSTM Pipeline" width="700"/>
 </p>
 
 The directory contains a README that provides a description of  the files.

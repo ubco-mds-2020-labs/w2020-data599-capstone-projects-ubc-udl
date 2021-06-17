@@ -25,7 +25,7 @@ Note that this repository was used for all project documents (not limited to cod
 The Urban Data Lab (UDL) advances data access, data management and data analytics capabilities on the University of British Columbia (UBC) campus with a goal of addressing campus-wide sustainability challenges. UDL has access to the UBC Energy and Water Services (EWS) SkySpark analytics platform that collects data from buildings on the UBC campus including information such as heating, ventilation and air conditioning (HVAC) equipment and energy data. UDL stores data from SkySpark in their own database using InfluxDB and have noticed potentially erroneous data reporting from SkySpark. There is currently no system in place with InfluxDB to flag these data. The project goal was to develop a real-time anomaly detection system using open-source tools that could be used with InfluxDB.
 
 <p align="center">
-  <img src="images/concept.svg" alt="Project Concept" width="450"/>
+  <img src="images/concept.png" alt="Project Concept" width="500"/>
 </p>
 
 ### Anomaly Detection Framework
@@ -33,7 +33,7 @@ The Urban Data Lab (UDL) advances data access, data management and data analytic
 The approach used in this study provides near real-time anomaly detection with InfluxDB. Model training is completed by querying sensor data on an infrequent basis (for example monthly), training, and saving the models. Anomaly detection occurs on a continuous basis by reading recent data, loading and running the previously trained models, and writing predictions to InfluxDB. A subset of Campus Energy Center (CEC) boiler sensors available in SkySpark was selected for the study to test this approach.
 
 <p align="center">
-  <img src="images/framework.png" alt="Anomaly Detection Framework" width="450"/>
+  <img src="images/framework.png" alt="Anomaly Detection Framework" width="500"/>
 </p>
 
 ### Anomaly Detection Model
@@ -41,7 +41,7 @@ The approach used in this study provides near real-time anomaly detection with I
 A long short-term memory recurrent neural network with an encoder-decoder architecture (LSTM-ED) is used for anomaly detection. This was selected as it provides a general model with good performance in recent studies. The generalizability of the LSTM-ED is important given the wide variety of sensor types available to UDL. The model is trained in an unsupervised approach using sequence reconstruction of input data. Anomaly predictions are then based on identifying data with high sequence reconstruction error. The LSTM-ED was found to have good initial performance on the selected subset of CEC sensors. A data pattern was identified that the model had trouble detecting but it is believed that performance can be improved using more sophisticated anomaly error/threshold identification rules.
 
 <p align="center">
-  <img align="center" src="images/LSTM-ED.png" alt="LSTM-ED" width="550"/>
+  <img align="center" src="images/LSTM-ED.png" alt="LSTM-ED" width="600"/>
 </p>
 
 ### Dashboard and Notification System
