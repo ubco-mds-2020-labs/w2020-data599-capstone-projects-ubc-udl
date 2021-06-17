@@ -1,4 +1,4 @@
-# R SkySpark Data
+# machine-labelled
 
 This folder contains the datasets from the `labelled-skyspark-data` folder but has data labelled as anomalous by our anomaly detection method. This data was used for our final report results and figures. The folder contains:
 

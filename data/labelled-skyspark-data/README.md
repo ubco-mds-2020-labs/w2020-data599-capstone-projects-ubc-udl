@@ -6,8 +6,9 @@ This folder contains the datasets from the `unlabelled-skyspark-data` folder but
 - updated csv files with the `Anomaly` column updated. Manual labelling done using the Shiny app in `/code/labeller-app/`
 - `labelled_anomalies_summary` listing the labelled anomaly events with any questions/comments
 - an image folder corresponding to each sensor with snapshots from the app (the summary spreadsheet provides information on the images)
-- note that the datetime column in the csv files are in UTC
-- a folder containing csv files that have their data labelled by our anomaly detection method.
+- a folder `machine-labelled` containing csv files that have their data labelled by our anomaly detection method - these files were used to generate the figures in the report
+
+**Note that the datetime column in the csv files are in UTC**
 
 | Sensor Name                                    | Filename                         | Description                                                                                          | Image Folder          |
 | ---------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------- |
