@@ -8,16 +8,10 @@ This folder consists of the data manually downloaded from the EWS SkySpark inter
 
 ## labelled-skyspark-data
 
-This folder contains the datasets from the `unlabelled-skspark-data` folder but has data manually labelled as anomalous for input to modelling. The folder contains:
+This folder contains the datasets from the `unlabelled-skspark-data` folder but has data manually labelled as anomalous for input to model testing. The folder contains:
 
 - a summary spreadsheet with a table noting various permutations on sensor labelling  
 - the updated csv files with the `Anomaly` column updated. Manual labelling done using the Shiny app in `/code/labeller-app/`
 - a summary spreadsheet listing the labelled anomaly events with any questions/comments
 - an image folder corresponding to each sensor with snapshots from the app (the summary spreadsheet provides information on the images)
-
-
-## testing-data
-
-This folder contains data that has been manually altered to replicate a set of a data from an original sensor:
-- training_bucket.csv: an example of data that would exist in InfluxDB's training bucket
-- main_bucket.csv: an example of data that would exist in InfluxDB's main bucket
+- a folder `machine-labelled` containing csv files that have their data labelled by our anomaly detection method from testing - these files were used to generate the figures in the report

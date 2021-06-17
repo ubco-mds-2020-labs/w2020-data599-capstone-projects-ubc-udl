@@ -23,4 +23,4 @@ The app uses the [`renv` package](https://rstudio.github.io/renv/articles/renv.h
 
 ## Demo
 
-A demo of the app is available [here](../../images/app.GIF). It includes loading a file (previously labelled) that has approximately 400,000 data points (34 MB file), interactively moving around the graph, selecting/labelling data points as anomalous, and downloading the updated file. The demo shows that while loading the graph takes some time, interacting with the graph has good performance.
+A demo of the app is available [here](demo/). It includes loading a file (previously labelled) that has approximately 400,000 data points (34 MB file), interactively moving around the graph, selecting/labelling data points as anomalous, and downloading the updated file. The demo shows that while loading the graph takes some time, interacting with the graph has good performance.

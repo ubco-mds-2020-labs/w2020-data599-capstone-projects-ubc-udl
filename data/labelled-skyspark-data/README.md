@@ -6,8 +6,12 @@ This folder contains the datasets from the `unlabelled-skyspark-data` folder but
 - updated csv files with the `Anomaly` column updated. Manual labelling done using the Shiny app in `/code/labeller-app/`
 - `labelled_anomalies_summary` listing the labelled anomaly events with any questions/comments
 - an image folder corresponding to each sensor with snapshots from the app (the summary spreadsheet provides information on the images)
-- note that the datetime column in the csv files are in UTC
-- a folder containing csv files that have their data labelled by our anomaly detection method.
+- a folder `machine-labelled` containing csv files that have their data labelled by our anomaly detection method - these files were used to generate the figures in the report
+
+**Notes:** 
+
+- the datetime column in the csv files are in UTC
+- sensors 1-5 were used in Phase 1 testing and sensors 6-10 were used in Phase 2 testing as discussed in the final report
 
 | Sensor Name                                    | Filename                         | Description                                                                                          | Image Folder          |
 | ---------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------- |
@@ -23,8 +27,8 @@ This folder contains the datasets from the `unlabelled-skyspark-data` folder but
 | Boiler B-1 Gas Pressure                        | CEC_compiled_data_4c_updated.csv | Anomalies visually labelled, patterns in winter labelled not labelled as anomalous data              | 4-images              |
 | Boiler B-1 Exhaust O2                          | CEC_compiled_data_5a_updated.csv | No anomalies labelled                                                                                | 5-images              |
 | Boiler B-1 Exhaust O2                          | CEC_compiled_data_5b_updated.csv | Anomalies visually labelled                                                                          | 5-images              |
-| Campus Energy Centre Boiler B-2 Exhaust O2     | CEC_compiled_data_6_updated.csv  | No anomalies labelled                                                                                | No anomalies labelled |
-| Campus Energy Centre Feeder 60L56 Real Power   | CEC_compiled_data_7_updated.csv  | No anomalies labelled                                                                                | No anomalies labelled |
-| Campus Energy Centre Boiler B-2 Gas Pressure   | CEC_compiled_data_8_updated.csv  | No anomalies labelled                                                                                |
-| Campus Energy Centre Boiler B-1 Power          | CEC_compiled_data_9_updated.csv  | No anomalies labelled                                                                                |
-| Campus Energy Centre Process System Pump Speed | CEC_compiled_data_10_updated.csv | No anomalies labelled                                                                                |
+| Campus Energy Centre Boiler B-2 Exhaust O2     | CEC_compiled_data_6_updated.csv  | No anomalies labelled                                                                                | No Images |
+| Campus Energy Centre Feeder 60L56 Real Power   | CEC_compiled_data_7_updated.csv  | No anomalies labelled                                                                                | No Images |
+| Campus Energy Centre Boiler B-2 Gas Pressure   | CEC_compiled_data_8_updated.csv  | No anomalies labelled                                                                                | No Images |
+| Campus Energy Centre Boiler B-1 Power          | CEC_compiled_data_9_updated.csv  | No anomalies labelled                                                                                | No Images |
+| Campus Energy Centre Process System Pump Speed | CEC_compiled_data_10_updated.csv | No anomalies labelled                                                                                | No Images |
