@@ -20,3 +20,5 @@ Data used for the notebooks can be found in the data/labelled-skyspark-data fold
 Images for the corresponding investigation can be found in the respective image folders.
 Image naming structure follows format of data, modelling method, window size, and threshold.   
 **For example:** data_2a_PD_ts_15_thresh_5_a.png is evaluating the 'CEC_compiled_data_2a_updated.csv' with predict next point modelling method with window size of 15 points and a threshold of 5% of the maximum training error.
+
+The **initial_results_testing.xlsx** contains a summerized collection of the testing performed using these notebooks.
