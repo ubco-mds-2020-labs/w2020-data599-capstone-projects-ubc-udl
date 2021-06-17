@@ -25,7 +25,7 @@ Note that this repository was used for all project documents (not limited to cod
 The Urban Data Lab (UDL) advances data access, data management and data analytics capabilities on the University of British Columbia (UBC) campus with a goal of addressing campus-wide sustainability challenges. UDL has access to the UBC Energy and Water Services (EWS) SkySpark analytics platform that collects data from buildings on the UBC campus including information such as heating, ventilation and air conditioning (HVAC) equipment and energy data. UDL stores data from SkySpark in their own database using InfluxDB and have noticed potentially erroneous data reporting from SkySpark. There is currently no system in place with InfluxDB to flag these data. The project goal was to develop a real-time anomaly detection system using open-source tools that could be used with InfluxDB.
 
 <p align="center">
-  <img src="images/concept.png" alt="Project Concept" width="450"/>
+  <img src="images/concept.svg" alt="Project Concept" width="450"/>
 </p>
 
 ### Anomaly Detection Framework
