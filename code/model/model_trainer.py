@@ -18,25 +18,6 @@ THRESHOLD = 1.5
 TIME_STEPS = 15
 
 
-# def create_sequences(X, y, time_steps=TIME_STEPS):
-#     """
-#     creates time slices of the data
-
-#     X : pandas column
-#     y : pandas column
-
-#     eg:
-#     X_train, y_train = create_sequences(train[['value']], train['value'])
-#     X_test, y_test = create_sequences(test[['value']], test['value'])
-#     """
-#     Xs, ys = [], []
-#     for i in range(len(X) - time_steps):
-#         Xs.append(X.iloc[i : (i + time_steps)].values)
-#         ys.append(y.iloc[i + time_steps])
-
-#     return np.array(Xs), np.array(ys)
-
-
 def create_sequences(X, y, time_steps=30, window=1):
     Xs, ys = [], []
     for i in range(0, len(X) - time_steps, window):
@@ -48,7 +29,7 @@ def create_sequences(X, y, time_steps=30, window=1):
 def save_loss_percentile(
     col1,
     sensor_name,
-    percentile=0.995,
+    percentile=99.5,
     file_path="./test_env_loss_percentiles/",
 ):
     """
@@ -148,32 +129,10 @@ def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
         model, _ = fit_model(x_train, y_train)
         model.save(model_save_loc + key, save_format="h5")
 
-        # # predict on train set
         x_train_pred = model.predict(x_train, verbose=0)
         train_mae_loss = np.mean(np.abs(x_train_pred - x_train), axis=1)
-        # print(type(train_mae_loss))
-        # print(train_mae_loss.shape)
 
         loss_percentile = save_loss_percentile(train_mae_loss, key, 99.5)
-
-        # train_score_df = pd.DataFrame(data_dict[key]["train"][TIME_STEPS:]) # num rows - 15
-        # train_score_df["loss"] = train_mae_loss # numrows / 15
-        # train_score_df["threshold"] = threshold_ratio * loss_percentile
-        # train_score_df["uniqueID"] = key
-        # train_score_df["model_anomaly"] = (
-        #     train_score_df["loss"] > train_score_df["threshold"]
-        # )
-        # train_score_df.rename(columns={"Datetime": "DateTime"}, inplace=True)
-        # train_score_df["val_num"] = data_dict[key]["train"][TIME_STEPS:]["Value"]
-
-        # if "manual_anomaly" not in set(train_score_df.columns):
-        #     train_score_df["manual_anomaly"] = False
-        # train_score_df.set_index("DateTime", drop=True, inplace=True)
-
-        # # print("inside model trainer")
-        # # print(train_score_df.head())
-        # # print("inside model trainer")
-        # data_dict[key]["train_score_df"] = train_score_df
 
 
 if __name__ == "__main__":
