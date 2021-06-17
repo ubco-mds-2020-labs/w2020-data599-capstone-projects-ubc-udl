@@ -1,8 +1,7 @@
 """
-loads csvs into influx to create a test environment
+loads csv files into InfluxDB to create a test environment
 """
 import time
-
 import pandas as pd
 
 from influxdb_client import InfluxDBClient
@@ -21,12 +20,12 @@ if __name__ == "__main__":
 
     start = time.time()
 
-    # as set up in the docker-compose
+    # as setup in docker-compose.yml
     token = "mytoken"
     org = "UBC"
     bucket = "MDS2021"
 
-    # set up influx
+    # setup InfluxDB client
     client = InfluxDBClient(url="http://localhost:8086", token=token, timeout=999_000)
     write_api = client.write_api(write_options=SYNCHRONOUS)
 

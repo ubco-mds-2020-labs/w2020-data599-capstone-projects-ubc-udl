@@ -127,7 +127,7 @@ class influx_class:
 
         return result
 
-    def write_data(self, df, measurement):
+    def write_data(self, df, measurement, tags):
         """
         Write to InfluxDB
 
@@ -144,7 +144,7 @@ class influx_class:
             self.org,
             record=df,
             data_frame_measurement_name=measurement,
-            data_frame_tag_columns=["uniqueID"],
+            data_frame_tag_columns=tags,
         )
 
 
