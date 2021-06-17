@@ -60,11 +60,6 @@ def save_loss_percentile(
     percentile : float
     """
 
-    import os
-
-    cwd = os.getcwd()
-    print(cwd)
-
     file_name = sensor_name + "_loss_percentile.pkl"
 
     loss_percentile = np.percentile(col1, percentile)
@@ -159,16 +154,7 @@ def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
         # print(type(train_mae_loss))
         # print(train_mae_loss.shape)
 
-        print("this is the train_mae_loss average")
-        print(sum(train_mae_loss) / len(train_mae_loss))
-        print(np.percentile(train_mae_loss, 99.5))
-
-        print("this is the train_mae_loss average")
-
         loss_percentile = save_loss_percentile(train_mae_loss, key, 99.5)
-        print("this is the loss percentile")
-        print(loss_percentile)
-        print("this is the loss percentile")
 
         # train_score_df = pd.DataFrame(data_dict[key]["train"][TIME_STEPS:]) # num rows - 15
         # train_score_df["loss"] = train_mae_loss # numrows / 15
