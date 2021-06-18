@@ -1,7 +1,7 @@
 """
 Functions for training LSTM models
 """
-
+from pickle import dump
 from sklearn.preprocessing import StandardScaler
 
 from tensorflow import keras
@@ -18,23 +18,36 @@ THRESHOLD = 1.5
 TIME_STEPS = 15
 
 
-def create_sequences(X, y, time_steps=TIME_STEPS):
-    """
-    creates time slices of the data
-
-    X : pandas column
-    y : pandas column
-
-    eg:
-    X_train, y_train = create_sequences(train[['value']], train['value'])
-    X_test, y_test = create_sequences(test[['value']], test['value'])
-    """
+def create_sequences(X, y, time_steps=30, window=1):
     Xs, ys = [], []
-    for i in range(len(X) - time_steps):
+    for i in range(0, len(X) - time_steps, window):
         Xs.append(X.iloc[i : (i + time_steps)].values)
         ys.append(y.iloc[i + time_steps])
-
     return np.array(Xs), np.array(ys)
+
+
+def save_loss_percentile(
+    col1,
+    sensor_name,
+    percentile=99.5,
+    file_path="./test_env_loss_percentiles/",
+):
+    """
+    saves the percentile to a file during training to be read for prediction
+    to be multiplied with the threshold multiplier
+
+    col1 : pandas column
+    sensor_name : string
+    percentile : float
+    """
+
+    file_name = sensor_name + "_loss_percentile.pkl"
+
+    loss_percentile = np.percentile(col1, percentile)
+
+    dump(loss_percentile, open(file_path + file_name, "wb"))
+
+    return loss_percentile
 
 
 def create_general_lstm_model(shape1, shape2, num_units=128, dropout_rate=0.2):
@@ -78,7 +91,7 @@ def fit_model(x_train, y_train, model=None):
         batch_size=32,
         validation_split=0.1,
         callbacks=[
-            keras.callbacks.EarlyStopping(monitor="val_loss", patience=3, mode="min")
+            keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, mode="min")
         ],
         shuffle=False,
     )
@@ -86,7 +99,7 @@ def fit_model(x_train, y_train, model=None):
     return model, history
 
 
-def fit_models(data_dict, model_save_loc, threshold=THRESHOLD):
+def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
     """
     takes the data_dict and trains and saves a model for each of the data
     modifies the input data_dict to have a train predictions dataframe
@@ -116,15 +129,10 @@ def fit_models(data_dict, model_save_loc, threshold=THRESHOLD):
         model, _ = fit_model(x_train, y_train)
         model.save(model_save_loc + key, save_format="h5")
 
-        # predict on train set
         x_train_pred = model.predict(x_train, verbose=0)
         train_mae_loss = np.mean(np.abs(x_train_pred - x_train), axis=1)
-        train_score_df = pd.DataFrame(data_dict[key]["train"][TIME_STEPS:])
-        train_score_df["loss"] = train_mae_loss
-        train_score_df["threshold"] = threshold
-        train_score_df["anomaly"] = train_score_df["loss"] > train_score_df["threshold"]
-        train_score_df["value"] = data_dict[key]["train"][TIME_STEPS:]["Value"]
-        data_dict[key]["train_score_df"] = train_score_df
+
+        loss_percentile = save_loss_percentile(train_mae_loss, key, 99.5)
 
 
 if __name__ == "__main__":
