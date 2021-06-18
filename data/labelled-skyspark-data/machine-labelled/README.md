@@ -1,6 +1,6 @@
-# Labelled SkySpark Data
+# machine-labelled
 
-This folder contains the datasets from the `labelled-skyspark-data` folder but has data labelled as anomalous by our anomaly detection method. The folder contains:
+This folder contains the datasets from the `labelled-skyspark-data` folder but has data labelled as anomalous by our anomaly detection method. This data was used for our final report results and figures. The folder contains:
 
 | Sensor Name                                    | Filename                         | Model                   | Window Size |
 | ---------------------------------------------- | -------------------------------- | ----------------------- | ----------- |
@@ -17,4 +17,3 @@ This folder contains the datasets from the `labelled-skyspark-data` folder but h
 | Campus Energy Centre Boiler B-1 Power          | CEC_compiled_data_9_updated.csv  | Sequence Reconstruction | 15 points   |
 | Campus Energy Centre Process System Pump Speed | CEC_compiled_data_10_updated.csv | Sequence Reconstruction | 15 points   |
 
-This data was used for our final report results and figures.

@@ -8,7 +8,10 @@ The data were downloaded in CSV format 10,000 data points at a time and then mer
 - an `ID` column was added with the name of the sensor
 - an `Anomaly` column was added (True/False) and was populated with `False`
 
-Note that the sensors have different recording intervals.
+**Notes:**
+
+- the sensors have different recording intervals
+- sensors 1-5 were used in Phase 1 testing and sensors 6-10 were used in Phase 2 testing as discussed in the final report
 
 | **Sensor Name**                                               | **File Name**            | **Date Range**      |
 | :------------------------------------------------------------ | :----------------------- | :------------------ |

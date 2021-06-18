@@ -1,6 +1,7 @@
+from pickle import dump, load
+import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from pickle import dump, load
 
 
 def add_anomalies(df1, df2):
@@ -55,6 +56,26 @@ def split_sensors(df1):
         )
 
     return sensor_bucket
+
+
+def load_loss_percentile(sensor_name, file_path="./test_env_loss_percentiles/"):
+    """
+    loads the percentile for prediction
+    to be multiplied with the threshold multiplier
+
+    sensor_name : string
+    percentile : float
+    """
+    # import os
+
+    # cwd = os.getcwd()
+    # print(cwd)
+
+    file_name = sensor_name + "_loss_percentile.pkl"
+
+    loss_percentile = load(open(file_path + file_name, "rb"))
+
+    return loss_percentile
 
 
 def std_val_train(col1, id, file_path="../standardize-parameters/"):
