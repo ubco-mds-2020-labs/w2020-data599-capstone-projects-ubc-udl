@@ -83,8 +83,8 @@ for key, df in main_bucket.items():
     mt.fit_models(normal_dict, MODEL_SAVE_LOC, PERCENTILE_SAVE_LOC)
 
     # creates sequences for sliding windows for predicting on the train set
-    timestamps = df["DateTime"].tail(len(df) - x_train.shape[1]).values
-    val_nums = df["Value"].tail(len(df) - x_train.shape[1]).values
+    timestamps = df["DateTime"].tail(len(df) - x_train.shape[1] + 1).values
+    val_nums = df["Value"].tail(len(df) - x_train.shape[1] + 1).values
     manual_anomaly = df["manual_anomaly"].tail(len(df) - x_train.shape[1]).values
     loss_percentile = cl.load_loss_percentile(key, file_path=PERCENTILE_SAVE_LOC)
     threshold = loss_percentile * threshold_ratio

@@ -18,11 +18,11 @@ THRESHOLD = 1.5
 TIME_STEPS = 15
 
 
-def create_sequences(X, y, time_steps=30, window=1):
+def create_sequences(X, y, time_steps=15, window=1):
     Xs, ys = [], []
-    for i in range(0, len(X) - time_steps, window):
+    for i in range(0, len(X) - time_steps + 1, window):
         Xs.append(X.iloc[i : (i + time_steps)].values)
-        ys.append(y.iloc[i + time_steps])
+        ys.append(y.iloc[i + time_steps - 1])
     return np.array(Xs), np.array(ys)
 
 

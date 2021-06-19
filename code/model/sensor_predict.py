@@ -62,8 +62,8 @@ for key, df in dfs_for_pred.items():
     x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
     # set up lists for passing to predict
-    timestamps = df["DateTime"].tail(len(df) - x_train.shape[1]).values
-    val_nums = df["Value"].tail(len(df) - x_train.shape[1]).values
+    timestamps = df["DateTime"].tail(len(df) - x_train.shape[1] + 1).values
+    val_nums = df["Value"].tail(len(df) - x_train.shape[1] + 1).values
 
     loss_percentile = cl.load_loss_percentile(key, file_path=PERCENTILE_SAVE_LOC)
     threshold = threshold_ratios[key] * loss_percentile
