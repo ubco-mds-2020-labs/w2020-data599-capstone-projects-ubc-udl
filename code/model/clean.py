@@ -158,7 +158,7 @@ def model_parser(df1, x_train, y_train, x_eval):
             "x_train": x_train,
             "y_train": y_train,
             "x_eval": x_eval,
-            "y_eval": _,
+            "y_eval": "_",
             "train": df1,
             "test": "_",
         }
