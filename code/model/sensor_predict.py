@@ -42,10 +42,25 @@ for key, df in main_bucket.items():
         df[["Value"]], main_bucket[key]["ID"].any()
     )
 
+    # train on only data points not flagged manually
+    df = df[df.manual_anomaly != True]
+
     # creates arrays for sliding windows
     x_data, y_data = mt.create_sequences(
         main_bucket[key][["Value"]], main_bucket[key]["Value"]
     )
+    # creates sequences for sliding windows for training
+    threshold_ratio = THRESHOLD_RATIOS[key]
+    time_steps = TIME_STEP_SIZES[key]
+    window_size = time_steps
+    x_train, y_train = mt.create_sequences(
+        df["Stand_Val"], df["Stand_Val"], time_steps, window_size
+    )
+    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+    x_eval, y_eval = mt.create_sequences(
+        df["Stand_Val"], df["Stand_Val"], time_steps, 1
+    )
+    x_eval = np.reshape(x_eval, (x_eval.shape[0], x_eval.shape[1], 1))
 
     # potential here for get model ids
     # can add string to whatever we name

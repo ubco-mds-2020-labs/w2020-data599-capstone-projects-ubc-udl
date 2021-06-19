@@ -99,7 +99,11 @@ def fit_model(x_train, y_train, model=None):
     return model, history
 
 
-def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
+def fit_models(
+    data_dict,
+    model_save_loc,
+    percentile_save_loc="./test_env_loss_percentiles/",
+):
     """
     takes the data_dict and trains and saves a model for each of the data
     modifies the input data_dict to have a train predictions dataframe
@@ -126,13 +130,17 @@ def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
         # train model
         x_train = data_dict[key]["x_train"]
         y_train = data_dict[key]["y_train"]
+        x_eval = data_dict[key]["x_eval"]
         model, _ = fit_model(x_train, y_train)
         model.save(model_save_loc + key, save_format="h5")
 
-        x_train_pred = model.predict(x_train, verbose=0)
-        train_mae_loss = np.mean(np.abs(x_train_pred - x_train), axis=1)
+        x_eval_pred = model.predict(x_eval, verbose=0)
+        print("this is the hook")
+        print(x_eval_pred.shape)
+        print("this is the hook")
+        train_mae_loss = np.mean(np.abs(x_eval_pred - x_eval), axis=1)
 
-        loss_percentile = save_loss_percentile(train_mae_loss, key, 99.5)
+        save_loss_percentile(train_mae_loss, key, 99.5, percentile_save_loc)
 
 
 if __name__ == "__main__":
