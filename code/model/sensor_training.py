@@ -19,6 +19,7 @@ with open("./time_step_sizes.json") as f:
 
 MODEL_SAVE_LOC = None
 PERCENTILE_SAVE_LOC = None
+SCALER_SAVE_LOC = None
 
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
@@ -56,7 +57,7 @@ for key, df in main_bucket.items():
     print(df.head())
     # creates standardized column for each sensor in main bucket
     main_bucket[key]["Stand_Val"] = cl.std_val_train(
-        df[["Value"]], main_bucket[key]["ID"].any()
+        df[["Value"]], main_bucket[key]["ID"].any(), SCALER_SAVE_LOC
     )
 
     # train on only data points not flagged manually
