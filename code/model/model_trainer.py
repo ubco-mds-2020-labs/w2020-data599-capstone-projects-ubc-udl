@@ -135,9 +135,6 @@ def fit_models(
         model.save(model_save_loc + key, save_format="h5")
 
         x_eval_pred = model.predict(x_eval, verbose=0)
-        print("this is the hook")
-        print(x_eval_pred.shape)
-        print("this is the hook")
         train_mae_loss = np.mean(np.abs(x_eval_pred - x_eval), axis=1)
 
         save_loss_percentile(train_mae_loss, key, 99.5, percentile_save_loc)
