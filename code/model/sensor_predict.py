@@ -16,6 +16,14 @@ MODEL_SAVE_LOC = None
 PERCENTILE_SAVE_LOC = None
 SCALER_SAVE_LOC = None
 
+SENSOR_LIST = [
+    "Campus Energy Centre Campus HW Main Meter Power",
+    "Campus Energy Centre Campus HW Main Meter Entering Water Temperature",
+    "Campus Energy Centre Campus HW Main Meter Flow",
+    "Campus Energy Centre Boiler B-1 Gas Pressure",
+    "Campus Energy Centre Boiler B-1 Exhaust O2",
+]
+
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
 
@@ -38,7 +46,11 @@ influxdb = ii.influx_class(org, url, bucket, token)
 # provides main bucket data, no anomaly labelling
 # Readings looks like it coule be Number instead
 influx_read_df_for_pred = influxdb.make_query(
-    building_list, measurement="READINGS", start=start_date, end=end_date
+    building_list,
+    measurement="READINGS",
+    start=start_date,
+    end=end_date,
+    id=SENSOR_LIST,
 )
 
 # creates a dictionary of dataframes for each sensor in main_bucket

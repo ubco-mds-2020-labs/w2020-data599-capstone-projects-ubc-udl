@@ -20,6 +20,14 @@ MODEL_SAVE_LOC = None
 PERCENTILE_SAVE_LOC = None
 SCALER_SAVE_LOC = None
 
+SENSOR_LIST = [
+    "Campus Energy Centre Campus HW Main Meter Power",
+    "Campus Energy Centre Campus HW Main Meter Entering Water Temperature",
+    "Campus Energy Centre Campus HW Main Meter Flow",
+    "Campus Energy Centre Boiler B-1 Gas Pressure",
+    "Campus Energy Centre Boiler B-1 Exhaust O2",
+]
+
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
 
@@ -35,22 +43,20 @@ influxdb = ii.influx_class(org, url, bucket, token)
 
 # provides main bucket data, no anomaly labelling
 # Readings looks like it coule be Number instead
-main_bucket = influxdb.make_query(building_list, measurement="READINGS")
+influx_data = influxdb.make_query(
+    building_list,
+    measurement="READINGS",
+    id=SENSOR_LIST,
+)
 
-# provides training bucket data
-training_bucket = influxdb.make_query(building_list, measurement="TRAINING")
-
-# creates a dictionary of dataframes for each sensor in main_bucket
-main_bucket = cl.split_sensors(main_bucket)
-
-# creates a dictionary of dataframes for each sensor in main_bucket
-training_bucket = cl.split_sensors(training_bucket)
+# creates a dictionary of dataframes for each sensor in sensors_dict
+sensors_dict = cl.split_sensors(influx_data)
 
 # create empty dictionary
 normal_bucket = {}
 abnormal_bucket = {}
 
-for key, df in main_bucket.items():
+for key, df in sensors_dict.items():
     print("Training for : {}".format(key))
 
     # Delete data that is about to be written, to prevent duplicaete write on timestamp
@@ -66,8 +72,8 @@ for key, df in main_bucket.items():
     )
 
     # creates standardized column for each sensor in main bucket
-    main_bucket[key]["Stand_Val"] = cl.std_val_train(
-        df[["Value"]], main_bucket[key]["ID"].any(), SCALER_SAVE_LOC
+    sensors_dict[key]["Stand_Val"] = cl.std_val_train(
+        df[["Value"]], sensors_dict[key]["ID"].any(), SCALER_SAVE_LOC
     )
 
     # train on only data points not flagged manually
