@@ -1,9 +1,21 @@
-import influx_interact as ii
-import clean as cl
 import os
+import json
 from datetime import datetime
+import numpy as np
+import clean as cl
+import influx_interact as ii
 import model_trainer as mt
 import model_predict as mp
+
+# loads setting json files
+with open("./threshold_ratios.json") as f:
+    threshold_ratios = json.load(f)
+with open("./time_step_sizes.json") as f:
+    time_step_sizes = json.load(f)
+
+MODEL_SAVE_LOC = None
+PERCENTILE_SAVE_LOC = None
+SCALER_SAVE_LOC = None
 
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
@@ -26,43 +38,50 @@ influxdb = ii.influx_class(org, url, bucket, token)
 
 # provides main bucket data, no anomaly labelling
 # Readings looks like it coule be Number instead
-main_bucket = influxdb.make_query(
-    building_list, measurements="READINGS", start=start_date, end=end_date
+influx_read_df_for_pred = influxdb.make_query(
+    building_list, measurement="READINGS", start=start_date, end=end_date
 )
 
 # creates a dictionary of dataframes for each sensor in main_bucket
-main_bucket = cl.split_sensors(main_bucket)
+dfs_for_pred = cl.split_sensors(influx_read_df_for_pred)
 
-predictions = {}
-model_id = {}
 
-for key, df in main_bucket.items():
-    # creates standardized column for each sensor in main bucket
-    main_bucket[key]["Stand_Val"] = cl.std_val_predict(
-        df[["Value"]], main_bucket[key]["ID"].any()
+for key, df in dfs_for_pred.items():
+    dfs_for_pred[key]["Stand_Val"] = cl.std_val_predict(
+        dfs_for_pred[key][["Value"]],
+        dfs_for_pred[key]["ID"].any(),
+        SCALER_SAVE_LOC,
     )
 
     # creates arrays for sliding windows
-    x_data, y_data = mt.create_sequences(
-        main_bucket[key][["Value"]], main_bucket[key]["Value"]
+    time_steps = time_step_sizes[key]
+    window_size = 1
+    x_train, y_train = mt.create_sequences(
+        df["Stand_Val"], df["Stand_Val"], time_steps, window_size
+    )
+    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+
+    # set up lists for passing to predict
+    timestamps = df["DateTime"].tail(len(df) - x_train.shape[1] + 1).values
+    val_nums = df["Value"].tail(len(df) - x_train.shape[1] + 1).values
+
+    loss_percentile = cl.load_loss_percentile(key, file_path=PERCENTILE_SAVE_LOC)
+    threshold = threshold_ratios[key] * loss_percentile
+
+    # predicting and prediction formatting
+    pred_df = mp.make_prediction(
+        key,
+        x_train,
+        timestamps,
+        threshold,
+        val_nums,
+        MODEL_SAVE_LOC,
+        anomaly_type="realtime_anomaly",
+    )
+    pred_df = pred_df[["uniqueID", "val_num", "realtime_anomaly"]]
+
+    influxdb.write_data(
+        pred_df, "PREDICT_ANOMALY", tags=["uniqueID", "realtime_anomaly"]
     )
 
-    # potential here for get model ids
-    # can add string to whatever we name
-    # the models as
-    model_id = main_bucket[key]["ID"].any()
-
-    # gets predictions
-    predictions = mp.make_prediction(
-        model_id=model_id,
-        x_data=x_data,
-        time_stamps=main_bucket[key]["Datetime"],
-        threshold="threshold set somehow",
-    )
-
-    # Add anomaly values back to main bucket
-    main_bucket[key]["AR"] = predictions["Anomaly"]
-
-    # Write to influx Training and Influx Realtime Buckets
-    influxdb.write_data(main_bucket[key], "CHECK_ANOMALY")
-    influxdb.write_data(main_bucket[key], "TRAINING")
+    influxdb.client.close()

@@ -147,7 +147,7 @@ def split_normal(df1):
     )
 
 
-def model_parser(df1, x_train, y_train):
+def model_parser(df1, x_train, y_train, x_eval):
     """
     changes columns to
 
@@ -157,8 +157,8 @@ def model_parser(df1, x_train, y_train):
         df1["ID"].any(): {
             "x_train": x_train,
             "y_train": y_train,
-            "x_test": "_",
-            "y_test": "_",
+            "x_eval": x_eval,
+            "y_eval": "_",
             "train": df1,
             "test": "_",
         }
