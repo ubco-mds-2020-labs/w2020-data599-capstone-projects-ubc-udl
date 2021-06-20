@@ -2,20 +2,12 @@
 Functions for training LSTM models
 """
 from pickle import dump
-from sklearn.preprocessing import StandardScaler
 
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Dropout, RepeatVector, TimeDistributed
 
-import pandas as pd
 import numpy as np
-
-
-# A point with a MAE larger than this threshold is labeled anomalous
-THRESHOLD = 1.5
-
-TIME_STEPS = 15
 
 
 def create_sequences(X, y, time_steps=15, window=1):
@@ -23,7 +15,13 @@ def create_sequences(X, y, time_steps=15, window=1):
     for i in range(0, len(X) - time_steps + 1, window):
         Xs.append(X.iloc[i : (i + time_steps)].values)
         ys.append(y.iloc[i + time_steps - 1])
-    return np.array(Xs), np.array(ys)
+
+    X_array = np.array(Xs)
+    y_array = np.array(ys)
+
+    X_array = np.reshape(X_array, (X_array.shape[0], X_array.shape[1], 1))
+
+    return X_array, y_array
 
 
 def save_loss_percentile(
@@ -112,9 +110,11 @@ def fit_models(
     where data is a dict with keys :
         dict_keys(['x_train', 'x_test', 'y_train', 'y_test', 'raw_train', 'raw_test'])
 
-    where x_train, x_test, y_train, y_test are the train/test subsets that have been windowed
+    where x_train, x_test, y_train, y_test are
+    the train/test subsets that have been windowed
 
-    and raw_train and raw_test are dataframes with columns at least ["Timestamp", "value"]
+    and raw_train and raw_test are dataframes
+    with columns at least ["Timestamp", "value"]
     where value is un-scaled/un-standardized
 
     data_dict is modified to have a new key value pair

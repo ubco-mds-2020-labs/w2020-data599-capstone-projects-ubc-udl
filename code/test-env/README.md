@@ -1,0 +1,4 @@
+# Test Environment
+The notebook file `test_env_demo.ipynb` provides a walkthrough of using the anomaly detection framework in a test environment. This test environment was used as UDL's InfluxDB instance was still being setup with SkySpark data during the project. The test environment populates an instance of InfluxDB (created using Docker) with sensor data from `../../data/labelled-skyspark-data/`. The sensor data was manually downloaded from SkySpark and corresponds with five sensors used in Phase 1 model testing.
+
+`prediction_timer_demo.ipynb` is a notebook that explores the time it would take to run the prediction script and write back to influxDB on a subset of incoming data. It currently looks at a single sensor from `../../data/labelled-skyspark-data/` but can be modified easily to query multiple sensors from that location.

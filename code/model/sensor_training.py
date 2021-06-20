@@ -4,7 +4,6 @@ Some code is semipseudo code for untill InfluxDB is going.
 """
 import os
 import json
-import numpy as np
 import influx_interact as ii
 import clean as cl
 import model_trainer as mt
@@ -38,7 +37,6 @@ influxdb = ii.influx_class(org, url, bucket, token)
 # Readings looks like it coule be Number instead
 main_bucket = influxdb.make_query(building_list, measurement="READINGS")
 
-# TODO are we still removing training data? presumably thats what this read is for
 # provides training bucket data
 training_bucket = influxdb.make_query(building_list, measurement="TRAINING")
 
@@ -61,20 +59,20 @@ for key, df in main_bucket.items():
     )
 
     # train on only data points not flagged manually
-    df = df[df.manual_anomaly != True]
+    df = df[df.manual_anomaly is not True]
 
     # creates sequences for sliding windows for training
     threshold_ratio = threshold_ratios[key]
     time_steps = time_step_sizes[key]
+
     window_size = time_steps
     x_train, y_train = mt.create_sequences(
         df["Stand_Val"], df["Stand_Val"], time_steps, window_size
     )
-    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+
     x_eval, y_eval = mt.create_sequences(
         df["Stand_Val"], df["Stand_Val"], time_steps, 1
     )
-    x_eval = np.reshape(x_eval, (x_eval.shape[0], x_eval.shape[1], 1))
 
     # format needed for fit model
     normal_dict = cl.model_parser(normal_bucket[key], x_train, y_train, x_eval)
@@ -105,6 +103,7 @@ for key, df in main_bucket.items():
     print(pred_df.groupby("model_anomaly").count())
     print(pred_df.groupby("manual_anomaly").count())
 
+    # write to influxDB
     influxdb.write_data(
         pred_df,
         "TRAINING_ANOMALY",
