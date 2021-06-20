@@ -88,7 +88,7 @@ def fit_model(x_train, y_train, model=None):
         x_train,
         y_train,
         epochs=100,
-        batch_size=32,
+        batch_size=64,
         validation_split=0.1,
         callbacks=[
             keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, mode="min")
