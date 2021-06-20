@@ -58,8 +58,6 @@ Ideally, the detection system could ultimately be used to provide campus and bui
 
 ## Code
 
-**TO BE UPDATED AFTER CODE FOLDER IS COMPLETE**
-
 The [code directory](code/) contains the project code used to build the anomaly detection model. The directory also contains tools used to complete the project and a test environment used for the detection framework.
 
 The directory has:
@@ -67,9 +65,9 @@ The directory has:
 - [docker-files](code/docker-files/) includes several docker setups used to run InfluxDB/Telegraf locally
 - [labeller-app](code/labeller-app/) is a Shiny App that can be used to visualize sensor data and graphically select and update labelling of the data as normal or anomalous
 - [model](code/model/) provides the python functions and scripts used for anomaly detection
-- [misc-notebooks](code/misc-notebooks/) provides various jupyter notebooks used in testing
+- [misc](code/misc-notebooks/) provides misc files used in development
 - [results](code/results/) includes results from LSTM-ED model testing on the CEC sensors used in the study
-- [test-env](create-test-env) provides a detailed jupyter notebook walk-through of the anomaly detection framework in a test InfluxDB environment
+- [test-env](test-env) provides a detailed jupyter notebook walk-through of the anomaly detection framework in a test InfluxDB environment
 
 A more detailed README is available in the directory and there are READMEs within each of the directory subfolders.
 
