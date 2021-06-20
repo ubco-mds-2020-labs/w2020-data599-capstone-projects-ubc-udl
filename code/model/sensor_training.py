@@ -52,7 +52,19 @@ abnormal_bucket = {}
 
 for key, df in main_bucket.items():
     print("Training for : {}".format(key))
-    print(df.head())
+
+    # Delete data that is about to be written, to prevent duplicaete write on timestamp
+    delete_api = influxdb.client.delete_api()
+    min_time = df["DateTime"].values[0]
+    max_time = df["DateTime"].values[-1]
+    delete_api.delete(
+        str(min_time) + "Z",
+        str(max_time) + "Z",
+        '_measurement="TRAINING_ANOMALY" AND uniqueID="{}"'.format(key),
+        bucket=bucket,
+        org=org,
+    )
+
     # creates standardized column for each sensor in main bucket
     main_bucket[key]["Stand_Val"] = cl.std_val_train(
         df[["Value"]], main_bucket[key]["ID"].any(), SCALER_SAVE_LOC
