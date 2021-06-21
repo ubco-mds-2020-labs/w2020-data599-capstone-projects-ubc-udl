@@ -1,7 +1,9 @@
 ## results
 
 This folder contains the folder `model-evaluations` in which notebooks and images for the exploratory analysis of our LSTM-ED model are contained.  
-It also contains the following notebooks which look at specifically finding the best multiplicative factor to use on each data set when using a default threshold of the 99.5% percentile of the MAE loss in the training data.  Details for each notebook are as follows:
+It also contains the following notebooks which were generated after finding a decent performing default window size of 15 and a default threshold of the 99.5% percentile of the MAE loss in the training data.  
+These notebooks primary function was to determine the threshold multiplicative factor which qualitatively identified the most anomalies, with little false positive identifications.  
+Details for each notebook are as follows:
 
 | Sensor Name                              | Filename                         | Threshold Multiplicative Factor | Window |
 | ---------------------------------------- | -------------------------------- | ------------------------------- | ------ |
