@@ -15,7 +15,7 @@ This README provides on overview of the project repository and is organized into
 
 There are READMEs provided in subfolders for additional information.
 
-The main project code package can be found [here](code/model/) and a walk-through in notebook format using a test environment can be found [here](code/create-test-env/test_env_demo.ipynb). 
+The main project code package can be found [here](code/model/) and a walk-through in notebook format using a test environment can be found [here](code/test-env/test_env_demo.ipynb). 
 
 Note that this repository was used for all project documents (not limited to code).
 
@@ -38,7 +38,7 @@ The approach used in this study provides near real-time anomaly detection with I
 
 ### Anomaly Detection Model
 
-A long short-term memory recurrent neural network with an encoder-decoder architecture (LSTM-ED) is used for anomaly detection. This was selected as it provides a general model with good performance in recent studies. The generalizability of the LSTM-ED is important given the wide variety of sensor types available to UDL. The model is trained in an unsupervised approach using sequence reconstruction of input data. Anomaly predictions are then based on identifying data with high sequence reconstruction error. The LSTM-ED was found to have good initial performance on the selected subset of CEC sensors. A data pattern was identified that the model had trouble detecting but it is believed that performance can be improved using more sophisticated anomaly error/threshold identification rules.
+A long short-term memory recurrent neural network with an encoder-decoder architecture (LSTM-ED) is used for anomaly detection. This was selected as it provides a general model with good performance in recent studies. The generalizability of the LSTM-ED is important given the wide variety of sensor types available to UDL. The model is trained in an unsupervised approach using sequence reconstruction of input data. Anomaly predictions are then based on identifying data with high sequence reconstruction error. The LSTM-ED was found to have good initial performance on the selected subset of CEC sensors. A data pattern was identified that the model had trouble detecting but using more sophisticated anomaly error/threshold identification rules should improve model performance and allow detection of this pattern.
 
 <p align="center">
   <img align="center" src="images/LSTM-ED.png" alt="LSTM-ED" width="600"/>
@@ -48,7 +48,14 @@ A long short-term memory recurrent neural network with an encoder-decoder archit
 
 A dashboard and notification system were also implemented with the anomaly detection model in a test InfluxDB environment. The dashboard can be built directly in InfluxDB and provides a simple display of sensor data overlaid with anomalous flagged data. The notification system also uses built-in InfluxDB functionality and was configured to send notifications for data predicted as anomalous. 
 
-**ADD SCREENSHOT HERE**
+<p align="left">
+  <img align="center" src="code/test-env/demo_screenshots/step5b.PNG" alt="dashboard" width="800"/>
+</p>
+
+
+<p align="left">
+  <img align="center" src="code/test-env/demo_screenshots/step7b.png" alt="dashboard" width="600"/>
+</p>
 
 ### Conclusion
 
