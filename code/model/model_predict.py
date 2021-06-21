@@ -26,7 +26,8 @@ def make_prediction(
     threshold: float, for flagging as anomalous
     values: unscaled values to be added back to the resulting dataframe
     model_path: string, path to saved model
-    anomaly_type: string, what to name the anomaly column (eg manual_anomaly, model_anomaly, or realtime_anomaly)
+    anomaly_type: string, what to name the
+    anomaly column (eg manual_anomaly, model_anomaly, or realtime_anomaly)
     extra: pandas series, eg if passing in manual anomalies
     """
     # make predictions

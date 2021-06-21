@@ -2,28 +2,26 @@
 Functions for training LSTM models
 """
 from pickle import dump
-from sklearn.preprocessing import StandardScaler
 
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Dropout, RepeatVector, TimeDistributed
 
-import pandas as pd
 import numpy as np
 
 
-# A point with a MAE larger than this threshold is labeled anomalous
-THRESHOLD = 1.5
-
-TIME_STEPS = 15
-
-
-def create_sequences(X, y, time_steps=30, window=1):
+def create_sequences(X, y, time_steps=15, window=1):
     Xs, ys = [], []
-    for i in range(0, len(X) - time_steps, window):
+    for i in range(0, len(X) - time_steps + 1, window):
         Xs.append(X.iloc[i : (i + time_steps)].values)
-        ys.append(y.iloc[i + time_steps])
-    return np.array(Xs), np.array(ys)
+        ys.append(y.iloc[i + time_steps - 1])
+
+    X_array = np.array(Xs)
+    y_array = np.array(ys)
+
+    X_array = np.reshape(X_array, (X_array.shape[0], X_array.shape[1], 1))
+
+    return X_array, y_array
 
 
 def save_loss_percentile(
@@ -88,7 +86,7 @@ def fit_model(x_train, y_train, model=None):
         x_train,
         y_train,
         epochs=100,
-        batch_size=32,
+        batch_size=64,
         validation_split=0.1,
         callbacks=[
             keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, mode="min")
@@ -99,7 +97,11 @@ def fit_model(x_train, y_train, model=None):
     return model, history
 
 
-def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
+def fit_models(
+    data_dict,
+    model_save_loc,
+    percentile_save_loc="./test_env_loss_percentiles/",
+):
     """
     takes the data_dict and trains and saves a model for each of the data
     modifies the input data_dict to have a train predictions dataframe
@@ -108,9 +110,11 @@ def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
     where data is a dict with keys :
         dict_keys(['x_train', 'x_test', 'y_train', 'y_test', 'raw_train', 'raw_test'])
 
-    where x_train, x_test, y_train, y_test are the train/test subsets that have been windowed
+    where x_train, x_test, y_train, y_test are
+    the train/test subsets that have been windowed
 
-    and raw_train and raw_test are dataframes with columns at least ["Timestamp", "value"]
+    and raw_train and raw_test are dataframes
+    with columns at least ["Timestamp", "value"]
     where value is un-scaled/un-standardized
 
     data_dict is modified to have a new key value pair
@@ -126,76 +130,11 @@ def fit_models(data_dict, model_save_loc, threshold_ratio=THRESHOLD):
         # train model
         x_train = data_dict[key]["x_train"]
         y_train = data_dict[key]["y_train"]
+        x_eval = data_dict[key]["x_eval"]
         model, _ = fit_model(x_train, y_train)
         model.save(model_save_loc + key, save_format="h5")
 
-        x_train_pred = model.predict(x_train, verbose=0)
-        train_mae_loss = np.mean(np.abs(x_train_pred - x_train), axis=1)
+        x_eval_pred = model.predict(x_eval, verbose=0)
+        train_mae_loss = np.mean(np.abs(x_eval_pred - x_eval), axis=1)
 
-        loss_percentile = save_loss_percentile(train_mae_loss, key, 99.5)
-
-
-if __name__ == "__main__":
-
-    # for testing, format will chagne
-    # example, will delete after demonstration is understood
-    path_to_models = "../../../models/"
-    data_save_loc = "../../../data/"
-    df1 = pd.read_csv(f"{data_save_loc}Campus Energy Centre_1.csv")
-    df2 = pd.read_csv(f"{data_save_loc}Campus Energy Centre_2.csv")
-
-    df1.columns = ["Timestamp", "value"]
-    df2.columns = ["Timestamp", "value"]
-
-    df1 = df1.dropna()
-    df2 = df2.dropna()
-
-    df1["value"] = df1["value"].apply(lambda x: float(x.strip("%")) / 100)
-    df2["value"] = df2["value"].apply(lambda x: float(x.strip("ppm")))
-
-    raw_train1 = df1.tail(5000).head(4000).copy(deep=True)
-    raw_test1 = df1.tail(5000).tail(1000).copy(deep=True)
-    raw_train2 = df2.tail(5000).head(4000).copy(deep=True)
-    raw_test2 = df2.tail(5000).tail(1000).copy(deep=True)
-    train1 = df1.tail(5000).head(4000)
-    test1 = df1.tail(5000).tail(1000)
-    train2 = df2.tail(5000).head(4000)
-    test2 = df2.tail(5000).tail(1000)
-
-    scaler = StandardScaler()
-    scaler1 = scaler.fit(train1[["value"]])
-    scaler2 = scaler.fit(train2[["value"]])
-
-    train1["value"] = scaler.transform(train1[["value"]])
-    test1["value"] = scaler.transform(test1[["value"]])
-    train2["value"] = scaler.transform(train2[["value"]])
-    test2["value"] = scaler.transform(test2[["value"]])
-
-    x1_train, y1_train = create_sequences(train1[["value"]], train1["value"])
-    x2_train, y2_train = create_sequences(train2[["value"]], train2["value"])
-    x1_test, y1_test = create_sequences(test1[["value"]], test1["value"])
-    x2_test, y2_test = create_sequences(test2[["value"]], test2["value"])
-
-    data = {
-        "sensor1": {
-            "x_train": x1_train,
-            "x_test": x1_test,
-            "y_train": y1_train,
-            "y_test": y1_test,
-            "train": raw_train1,
-            "test": raw_test1,
-        },
-        "sensor2": {
-            "x_train": x2_train,
-            "x_test": x2_test,
-            "y_train": y2_train,
-            "y_test": y2_test,
-            "train": raw_train2,
-            "test": raw_test2,
-        },
-    }
-
-    fit_models(data, path_to_models)
-
-    print(data["sensor1"].keys())
-    print(data["sensor1"]["train_score_df"].head())
+        save_loss_percentile(train_mae_loss, key, 99.5, percentile_save_loc)
