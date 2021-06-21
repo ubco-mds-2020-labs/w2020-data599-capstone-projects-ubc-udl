@@ -1,7 +1,6 @@
 import os
 import json
 from datetime import datetime
-import numpy as np
 import clean as cl
 import influx_interact as ii
 import model_trainer as mt
@@ -16,6 +15,14 @@ with open("./time_step_sizes.json") as f:
 MODEL_SAVE_LOC = None
 PERCENTILE_SAVE_LOC = None
 SCALER_SAVE_LOC = None
+
+SENSOR_LIST = [
+    "Campus Energy Centre Campus HW Main Meter Power",
+    "Campus Energy Centre Campus HW Main Meter Entering Water Temperature",
+    "Campus Energy Centre Campus HW Main Meter Flow",
+    "Campus Energy Centre Boiler B-1 Gas Pressure",
+    "Campus Energy Centre Boiler B-1 Exhaust O2",
+]
 
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
@@ -39,7 +46,11 @@ influxdb = ii.influx_class(org, url, bucket, token)
 # provides main bucket data, no anomaly labelling
 # Readings looks like it coule be Number instead
 influx_read_df_for_pred = influxdb.make_query(
-    building_list, measurement="READINGS", start=start_date, end=end_date
+    building_list,
+    measurement="READINGS",
+    start=start_date,
+    end=end_date,
+    id=SENSOR_LIST,
 )
 
 # creates a dictionary of dataframes for each sensor in main_bucket
@@ -59,7 +70,6 @@ for key, df in dfs_for_pred.items():
     x_train, y_train = mt.create_sequences(
         df["Stand_Val"], df["Stand_Val"], time_steps, window_size
     )
-    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
     # set up lists for passing to predict
     timestamps = df["DateTime"].tail(len(df) - x_train.shape[1] + 1).values
@@ -80,6 +90,7 @@ for key, df in dfs_for_pred.items():
     )
     pred_df = pred_df[["uniqueID", "val_num", "realtime_anomaly"]]
 
+    # write to influxDB
     influxdb.write_data(
         pred_df, "PREDICT_ANOMALY", tags=["uniqueID", "realtime_anomaly"]
     )

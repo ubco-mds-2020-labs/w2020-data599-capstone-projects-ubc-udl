@@ -4,7 +4,6 @@ Some code is semipseudo code for untill InfluxDB is going.
 """
 import os
 import json
-import numpy as np
 import influx_interact as ii
 import clean as cl
 import model_trainer as mt
@@ -21,6 +20,14 @@ MODEL_SAVE_LOC = None
 PERCENTILE_SAVE_LOC = None
 SCALER_SAVE_LOC = None
 
+SENSOR_LIST = [
+    "Campus Energy Centre Campus HW Main Meter Power",
+    "Campus Energy Centre Campus HW Main Meter Entering Water Temperature",
+    "Campus Energy Centre Campus HW Main Meter Flow",
+    "Campus Energy Centre Boiler B-1 Gas Pressure",
+    "Campus Energy Centre Boiler B-1 Exhaust O2",
+]
+
 # To be populated with buildings being evaluated
 building_list = "Campus Energy Centre"
 
@@ -36,45 +43,54 @@ influxdb = ii.influx_class(org, url, bucket, token)
 
 # provides main bucket data, no anomaly labelling
 # Readings looks like it coule be Number instead
-main_bucket = influxdb.make_query(building_list, measurement="READINGS")
+influx_data = influxdb.make_query(
+    building_list,
+    measurement="READINGS",
+    id=SENSOR_LIST,
+)
 
-# TODO are we still removing training data? presumably thats what this read is for
-# provides training bucket data
-training_bucket = influxdb.make_query(building_list, measurement="TRAINING")
-
-# creates a dictionary of dataframes for each sensor in main_bucket
-main_bucket = cl.split_sensors(main_bucket)
-
-# creates a dictionary of dataframes for each sensor in main_bucket
-training_bucket = cl.split_sensors(training_bucket)
+# creates a dictionary of dataframes for each sensor in sensors_dict
+sensors_dict = cl.split_sensors(influx_data)
 
 # create empty dictionary
 normal_bucket = {}
 abnormal_bucket = {}
 
-for key, df in main_bucket.items():
+for key, df in sensors_dict.items():
     print("Training for : {}".format(key))
-    print(df.head())
+
+    # Delete data that is about to be written, to prevent duplicaete write on timestamp
+    delete_api = influxdb.client.delete_api()
+    min_time = df["DateTime"].values[0]
+    max_time = df["DateTime"].values[-1]
+    delete_api.delete(
+        str(min_time) + "Z",
+        str(max_time) + "Z",
+        '_measurement="TRAINING_ANOMALY" AND uniqueID="{}"'.format(key),
+        bucket=bucket,
+        org=org,
+    )
+
     # creates standardized column for each sensor in main bucket
-    main_bucket[key]["Stand_Val"] = cl.std_val_train(
-        df[["Value"]], main_bucket[key]["ID"].any(), SCALER_SAVE_LOC
+    sensors_dict[key]["Stand_Val"] = cl.std_val_train(
+        df[["Value"]], sensors_dict[key]["ID"].any(), SCALER_SAVE_LOC
     )
 
     # train on only data points not flagged manually
-    df = df[df.manual_anomaly != True]
+    df = df[df.manual_anomaly is not True]
 
     # creates sequences for sliding windows for training
     threshold_ratio = threshold_ratios[key]
     time_steps = time_step_sizes[key]
+
     window_size = time_steps
     x_train, y_train = mt.create_sequences(
         df["Stand_Val"], df["Stand_Val"], time_steps, window_size
     )
-    x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+
     x_eval, y_eval = mt.create_sequences(
         df["Stand_Val"], df["Stand_Val"], time_steps, 1
     )
-    x_eval = np.reshape(x_eval, (x_eval.shape[0], x_eval.shape[1], 1))
 
     # format needed for fit model
     normal_dict = cl.model_parser(normal_bucket[key], x_train, y_train, x_eval)
@@ -105,6 +121,7 @@ for key, df in main_bucket.items():
     print(pred_df.groupby("model_anomaly").count())
     print(pred_df.groupby("manual_anomaly").count())
 
+    # write to influxDB
     influxdb.write_data(
         pred_df,
         "TRAINING_ANOMALY",
