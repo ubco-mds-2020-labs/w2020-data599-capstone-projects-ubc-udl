@@ -48,13 +48,13 @@ A long short-term memory recurrent neural network with an encoder-decoder archit
 
 A dashboard and notification system were also implemented with the anomaly detection model in a test InfluxDB environment. The dashboard can be built directly in InfluxDB and provides a simple display of sensor data overlaid with anomalous flagged data. The notification system also uses built-in InfluxDB functionality and was configured to send notifications for data predicted as anomalous. 
 
-<p align="center">
-  <img align="center" src="code/test-env/demo_screenshots/step5b.PNG" alt="dashboard" width="700"/>
+<p align="left">
+  <img align="center" src="code/test-env/demo_screenshots/step5b.PNG" alt="dashboard" width="800"/>
 </p>
 
 
 <p align="left">
-  <img align="center" src="code/test-env/demo_screenshots/step7b.png" alt="dashboard" width="500"/>
+  <img align="center" src="code/test-env/demo_screenshots/step7b.png" alt="dashboard" width="600"/>
 </p>
 
 ### Conclusion
