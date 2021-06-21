@@ -16,6 +16,8 @@ The following files contain the functions/classes used in the model framework:
   - contains functions for training a model and saving the model and model parameters
   - contains a function for windowing data used for training and for predictions
 
+**Note:** comprehensive error handling was not implemented with these functions and there is minimal unit testing. More complete error handling and unit tests should be added in the future.
+
 ## Scripts
 
 The following files  are scripts that call the functions noted in the list above. These would be run on a timed basis within the model framework:
@@ -25,7 +27,7 @@ The following files  are scripts that call the functions noted in the list above
 - `sensor_training.py`
   - a script to be run as need be (long periods, eg. every month) that will update the model parameters used for `sensor_predict.py` based on current data in InfluxDB for each individual sensor
 
-**NOTE:** The anomaly detection framework was tested/implemented in notebook format [here](../test-env/) and these scripts were not used (UDL's live streaming InfluxDB instance was not available during the project timeline). As such, it is expected that these scripts may require modification if implementing the framework.
+**NOTE:** The anomaly detection framework was tested/implemented in notebook format [here](../test-env/) and these scripts were not used (UDL's live streaming InfluxDB instance was not available during the project timeline). As such, it is expected that these scripts may require modification if implementing the framework. It may also make sense to create functions with some the code in these script files, this will likely be more apparent when trying to implement the scripts with the real-time system.
 
 ## Additional
 

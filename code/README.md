@@ -23,6 +23,7 @@ Shiny App that can be used to visualize sensor data and graphically select and u
 ## misc-notebooks
 
 This folder currently contains miscellaneous files created during development. These have been left in the repository as they may provide useful information for future development. Note that they are not directly useable/updated with the latest model, but just provide guidance.
+
 ## model
 
 Provides code for the model training and anomaly predictions with the anomaly detection framework.
