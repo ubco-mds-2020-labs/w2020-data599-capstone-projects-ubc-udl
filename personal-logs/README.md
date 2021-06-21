@@ -97,3 +97,13 @@ Final model tuning and test result organization for the report was also worked o
 | Project Management, Report, Dashboard Support | Model Results | Test Environment, Dashboard | - |
 
 The Dashboard did not get completed this week and will continue next week. It was also decided to continue additional testing for the project next week. As the report is in good shape, this is considered reasonable.
+
+**Week 7: Reporting**
+
+This week included final reporting and project wrap-up. As the the model was only implemented in a test environment, a good walk-through notebook was created as part of project wrap-up.
+
+Additional time was also spent at the end of the week troubleshooting an issue that was noted with the non-deterministic nature of the LSTM.
+
+| Nate | Mitch | Ryan | All |
+| --- | --- | --- | --- |
+| Project Management, Report | Model Results in Report | Code and Dashboard Wrap-up | Walk-through Notebook Wrap-up, Final Presentation |
