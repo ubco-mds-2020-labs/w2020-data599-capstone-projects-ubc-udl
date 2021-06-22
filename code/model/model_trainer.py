@@ -11,6 +11,14 @@ import numpy as np
 
 
 def create_sequences(X, y, time_steps=15, window=1):
+    """
+    Windows the data
+
+    X, y pandas columns
+
+    time_steps: int, width of window
+    window: int, how far to move the window each time
+    """
     Xs, ys = [], []
     for i in range(0, len(X) - time_steps + 1, window):
         Xs.append(X.iloc[i : (i + time_steps)].values)
@@ -37,6 +45,7 @@ def save_loss_percentile(
     col1 : pandas column
     sensor_name : string
     percentile : float
+    file_path : string
     """
 
     file_name = sensor_name + "_loss_percentile.pkl"

@@ -64,12 +64,8 @@ def load_loss_percentile(sensor_name, file_path="./test_env_loss_percentiles/"):
     to be multiplied with the threshold multiplier
 
     sensor_name : string
-    percentile : float
+    file_path : string
     """
-    # import os
-
-    # cwd = os.getcwd()
-    # print(cwd)
 
     file_name = sensor_name + "_loss_percentile.pkl"
 
@@ -83,6 +79,8 @@ def std_val_train(col1, id, file_path="../standardize-parameters/"):
     checks current data against pre-existing anomaly labels
 
     col1 : single sensor pandas int column
+    id : string, name of sensor (or sensor group)
+    file_path : string
     """
     file_name = id + "_scaler.pkl"
     # create scaler object
@@ -101,6 +99,8 @@ def std_val_predict(col1, id, file_path="../standardize-parameters/"):
     checks current data against pre-existing anomaly labels
 
     col1 : single sensor pandas int column
+    id : string, name of sensor (or sensor group)
+    file_path : string
     """
     file_name = id + "_scaler.pkl"
     # create scaler object
@@ -152,6 +152,9 @@ def model_parser(df1, x_train, y_train, x_eval):
     changes columns to
 
     df1 : single sensor pandas dataframe
+    x_train : sequenced x data for training
+    y_train : sequenced y data for training
+    x_train : sequenced x data for evaluating
     """
     dict_data = {
         df1["ID"].any(): {

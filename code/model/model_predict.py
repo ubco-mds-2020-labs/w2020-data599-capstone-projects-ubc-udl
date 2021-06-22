@@ -28,7 +28,6 @@ def make_prediction(
     model_path: string, path to saved model
     anomaly_type: string, what to name the
     anomaly column (eg manual_anomaly, model_anomaly, or realtime_anomaly)
-    extra: pandas series, eg if passing in manual anomalies
     """
     # make predictions
     model = keras.models.load_model(model_path + model_id)
